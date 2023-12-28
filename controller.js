@@ -68,6 +68,7 @@ class Controller {
             case "menuitem_load":
                 // Code für den Menüpunkt Load
                 console.log("Aktion für Load");
+                openJSON();
                 break;
             case "menuitem_save":
                 // Code für den Menüpunkt Save
