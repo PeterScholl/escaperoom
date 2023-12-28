@@ -29,7 +29,7 @@ class Controller {
             //console.log("Durchgang:"+i);
             //console.log("This/Self:"+JSON.stringify(self));
             //console.log("c"+JSON.stringify(c));
-            menuItems[i].addEventListener("click", this.reactMenuClick);
+            menuItems[i].addEventListener("click", (event) => self.reactMenuClick(event));
         }
 
         // Listener für das Keyfeld
@@ -55,6 +55,7 @@ class Controller {
 
     // Funktion, die aufgerufen wird, wenn ein Menüpunkt geklickt wird
     reactMenuClick(event) {
+        let self = this;
         // Verhindert das Standardverhalten des Links (falls vorhanden)
         event.preventDefault();
 
@@ -67,6 +68,11 @@ class Controller {
             case "menuitem_load":
                 // Code für den Menüpunkt Load
                 console.log("Aktion für Load");
+                break;
+            case "menuitem_save":
+                // Code für den Menüpunkt Save
+                console.log("menuitem Save: Datei wird gespeichert");
+                downloadJSON(self.game);
                 break;
 
             default:
