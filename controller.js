@@ -42,10 +42,13 @@ class Controller {
             }
         });
 
-        // Button des Modals
+        // Button des Modals bzw. click daneben
         document.getElementById('infomodalbutton').addEventListener("click", function(event) {
              self.showModal(false);
         });
+        document.getElementById('overlay').addEventListener("click", function(event) {
+            self.showModal(false);
+       });
 
         this.drawRoom();
     }
@@ -78,6 +81,7 @@ class Controller {
         document.getElementById('raumname').innerText=this.game.aktuellerRaum.name;
         // Infotext bzw. Welcometext ausgeben
         document.getElementById('infotext').innerHTML=this.game.aktuellerRaum.welcometext;
+        //TODO bei Zielraum eingabefeld ausblenden / ansonsten Einblendung prüfen und wieder 
         
     }
 
@@ -108,9 +112,13 @@ class Controller {
         if (show) {//anzeigen
             document.getElementById('infomodal').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
+            document.getElementById('infomodalbutton').focus();
         } else { //ausblenden
             document.getElementById('infomodal').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
+            //Fokus zurück auf das Eingabefeld und alles auswählen
+            document.getElementById('keyfeld').focus();
+            document.getElementById('keyfeld').select();
         }
     }
     isModalShown() {
