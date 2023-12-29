@@ -64,8 +64,8 @@ function openJSON(controller) {
 
                     let newEscapeGame = parseJSONObjToEscapeGame(jsonObj);
                      
-                    console.log(jsonObj);
-                    console.log(newEscapeGame);
+                    //console.log(jsonObj);
+                    //console.log(newEscapeGame);
 
                     if (controller) {
                         controller.newGame(newEscapeGame);
@@ -119,7 +119,7 @@ function parseJSONObjToRaum(jsonObjRaum) {
     // ein Raum hat die Attribute welcometext,name,folgeraeume,infotexte,istZiel
     let raumname = "Raum";
     let welcometext = "Hier fehlt der Raumtext :-(";
-    console.log(JSON.stringify(jsonObjRaum.name) + " - " +(jsonObjRaum.name instanceof String)+":" +(typeof jsonObjRaum));
+    //console.log(JSON.stringify(jsonObjRaum.name) + " - " +(jsonObjRaum.name instanceof String)+":" +(typeof jsonObjRaum));
     if (jsonObjRaum.name) {
         raumname = jsonObjRaum.name;
     }
