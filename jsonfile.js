@@ -36,7 +36,7 @@ function downloadJSON(game) {
 
 //Funktion um eine Datei zu Laden sie gibt ein komplett neues
 // EscapeGame-Objekt zurück oder null
-function openJSON() {
+function openJSON(controller) {
     // Ein unsichtbares Eingabefeld erstellen
     let dateiEingabe = document.createElement('input');
     dateiEingabe.type = 'file';
@@ -47,24 +47,31 @@ function openJSON() {
         // Überprüfen, ob eine Datei ausgewählt wurde
         if (dateiEingabe.files.length > 0) {
             // Die ausgewählte Datei
-            var datei = dateiEingabe.files[0];
+            let datei = dateiEingabe.files[0];
 
             // FileReader verwenden, um den Inhalt der Datei zu lesen
-            var reader = new FileReader();
+            let reader = new FileReader();
 
             // FileReader-Eventlistener für das Laden der Datei
             reader.onload = function (event) {
                 // Der Inhalt der Datei als Text
-                var jsonText = event.target.result;
+                let jsonText = event.target.result;
 
                 // Hier kannst du mit dem JSON-Text arbeiten, z.B. ihn analysieren oder anzeigen
                 try {
                     // Versuche, den JSON-Text zu analysieren
-                    var jsonObj = JSON.parse(jsonText);
+                    let jsonObj = JSON.parse(jsonText);
 
-                    // Hier kannst du mit dem JSON-Objekt arbeiten
-                    // TODO: ein sauberes Escape-Game erstellen
+                    let newEscapeGame = parseJSONObjToEscapeGame(jsonObj);
+                     
                     console.log(jsonObj);
+                    console.log(newEscapeGame);
+
+                    if (controller) {
+                        controller.newGame(newEscapeGame);
+                    } else {
+                        alert("Kein Controller vorhanden um das Game zu öffnen");
+                    }
 
                     // Erfolgreiches Ergebnis an eine Callback-Funktion zurückgeben
                     //ergebnisCallback(jsonObj);
@@ -83,4 +90,54 @@ function openJSON() {
 
     // Das Eingabefeld klicken, um den Auswahldialog zu öffnen
     dateiEingabe.click();
+}
+
+//Aus einem JSONObj ein Escape Game machen - in der Hoffnung, dass
+//alle Parameter richtig vorhanden sind
+function parseJSONObjToEscapeGame(jsonObj) {
+    // ein sauberes Escape-Game erstellen
+    // 1. Namen des Escape Games aus der Datei übernehmen
+    if (!jsonObj.name instanceof String) {
+        jsonObj.name = "Escape-Room-Spiel";
+    }
+    let newEscapeGame = new EscapeGame(jsonObj.name);
+    // 2. Raumliste aufbauen
+    let newRaumliste = [];
+    if (Array.isArray(jsonObj.raumliste)) {
+        newRaumliste=jsonObj.raumliste.map(parseJSONObjToRaum);
+    }
+    newEscapeGame.raumliste=newRaumliste;
+    if (Number.isInteger(jsonObj.startraumID)) {
+        newEscapeGame.startraumID = jsonObj.startraumID;
+        newEscapeGame.aktuellerRaumID = jsonObj.startraumID;
+    }
+    return newEscapeGame;
+}
+
+//Aus einem JSONObj einen Raum machen
+function parseJSONObjToRaum(jsonObjRaum) {
+    // ein Raum hat die Attribute welcometext,name,folgeraeume,infotexte,istZiel
+    let raumname = "Raum";
+    let welcometext = "Hier fehlt der Raumtext :-(";
+    console.log(JSON.stringify(jsonObjRaum.name) + " - " +(jsonObjRaum.name instanceof String)+":" +(typeof jsonObjRaum));
+    if (jsonObjRaum.name) {
+        raumname = jsonObjRaum.name;
+    }
+    if (jsonObjRaum.welcometext) {
+        welcometext = jsonObjRaum.welcometext;
+    }
+    let newRaum = new Raum(raumname,welcometext);
+    if (typeof jsonObjRaum.istZiel == "boolean") {
+        newRaum.istZiel = jsonObjRaum.istZiel;
+    }
+    // hier wird geprüft ob folgeräume ein Objekt/Dictionary ist
+    // Clonen ist überflüssig, da das JSON-Obj später nicht mehr 
+    // gebraucht wird (hoffentlich)
+    if (jsonObjRaum.folgeraeume.constructor == Object) {
+        newRaum.folgeraeume=jsonObjRaum.folgeraeume;
+    }
+    if (jsonObjRaum.infotexte.constructor === Object) {
+        newRaum.infotexte=jsonObjRaum.infotexte;
+    }
+    return newRaum;
 }

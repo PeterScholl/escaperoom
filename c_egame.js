@@ -1,25 +1,30 @@
-/* In dieser Klasse wird ein EscapeGame abgebildet */
+/* In dieser Klasse wird ein EscapeGame abgebildet 
+   Es enthält eine Raumliste aller Räume, damit sich das als JSON besser speichern lässt
+   Räume geben dann nur Folge-IDs zurück um den Raum zu wechseln
+*/
 class EscapeGame {
-    startraum = new Raum();
-    aktuellerRaum = this.startraum;
+    startraumID = 0;
+    raumliste = [new Raum()];
+    aktuellerRaumID = 0;
     name = "Mein Escape-Room";
 
-    constructor(name, startraum) {
+    constructor(name) {
         this.name=name;
-        this.startraum=startraum;
-        this.aktuellerRaum=startraum;
+        this.startraumID=0;
+        this.aktuellerRaumID=this.startraumID;
     }
 
     //ERstellt ein Beispielescapegame
     setExample() {
         let r1 = new Raum("Startraum Beispielgame","Du bist in einem dunklen Startraum, der Schalter für das Licht ist binär. Was steht darauf?");
         let r2 = new Raum("Zielraum - Beispielgame","Du bist am Ziel und hast die Erleuchtung gefunden");
-        r1.folgeraeume = {"eins":r2, "1":r2};
+        this.raumliste=[r1,r2];
+        r1.folgeraeume = {"eins":1, "1":1};
         r2.folgeraeume = {};
         r2.istZiel = true;
         r1.infotexte = {"0":"so geht es aus"};
-        this.startraum = r1;
-        this.aktuellerRaum = r1;
+        this.startraumID = 0;
+        this.aktuellerRaumID = 0;
         this.name = "Beispiel-Escape-Game";
     }
 
@@ -27,9 +32,9 @@ class EscapeGame {
     //meldet true bei Erfolg
     testKeyOnLock(key) {
         console.log("GAME: Schlüssel auf Schloss prüfen:"+key);
-        let folgeraum = this.aktuellerRaum.testKeyOnLock(key);
-        if (folgeraum) {
-            this.aktuellerRaum = folgeraum;
+        let folgeraumID = this.raumliste[this.aktuellerRaumID].testKeyOnLock(key);
+        if (folgeraumID>=0) {
+            this.aktuellerRaumID = folgeraumID;
             return true; //Success melden
         } else {
             return false; // kein Erfolg
@@ -40,11 +45,24 @@ class EscapeGame {
     //gibt den Text oder null zurück
     testKeyOnInfotexte(key) {
         console.log("GAME: Schlüssel auf Text prüfen:"+key);
-        let infotext = this.aktuellerRaum.testKeyInfotext(key);
+        let aktuellerRaum = this.raumliste[this.aktuellerRaumID];
+        let infotext = aktuellerRaum.testKeyInfotext(key);
         if (infotext) {
             return infotext; //Success melden
         } else {
             return false; // kein Erfolg
         }
+    }
+
+    //Aktuellen Raumnamen ausgeben
+    getAktuellerRaumName() {
+        let aktuellerRaum = this.raumliste[this.aktuellerRaumID];
+        return aktuellerRaum.name;
+    }
+
+    // Text zum aktuellen Raum ausgeben
+    getAktuellerRaumText() {
+        let aktuellerRaum = this.raumliste[this.aktuellerRaumID];
+        return aktuellerRaum.welcometext;
     }
 }

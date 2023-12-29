@@ -20,11 +20,11 @@ class Raum {
 
     testKeyOnLock(key) {
         //Wenn der key zu einem Folgeraum gehört, dann wird dieser zurückgegeben
-        let folgeraum = this.folgeraeume[key];
-        if (folgeraum) {
-            return folgeraum;
+        let folgeraumID = this.folgeraeume[key];
+        if (folgeraumID) {
+            return folgeraumID;
         }
-        // sonst null
-        return null;
+        // sonst -1
+        return -1;
     }
 }

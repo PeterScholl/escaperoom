@@ -68,7 +68,7 @@ class Controller {
             case "menuitem_load":
                 // Code für den Menüpunkt Load
                 console.log("Aktion für Load");
-                openJSON();
+                openJSON(self);
                 break;
             case "menuitem_save":
                 // Code für den Menüpunkt Save
@@ -85,11 +85,19 @@ class Controller {
     //Funktion die den aktuellen Raum auf der Webseite darstellt
     drawRoom() {
         // Name darstellen
-        document.getElementById('raumname').innerText=this.game.aktuellerRaum.name;
+        document.getElementById('raumname').innerText=this.game.getAktuellerRaumName();
         // Infotext bzw. Welcometext ausgeben
-        document.getElementById('infotext').innerHTML=this.game.aktuellerRaum.welcometext;
+        document.getElementById('infotext').innerHTML=this.game.getAktuellerRaumText();
         //TODO bei Zielraum eingabefeld ausblenden / ansonsten Einblendung prüfen und wieder 
         
+    }
+
+    //Neues Escape-Game starten
+    newGame(game) {
+        this.game=game;
+        this.drawRoom();
+        //ggf. Modal ausblenden
+        this.showModal(false);
     }
 
     //Funktion die den eingegebenen Schlüssel auswertet
@@ -132,7 +140,7 @@ class Controller {
         return document.getElementById('infomodal').style.display === 'block';
     }
     setModalText(text) {
-        document.getElementById('infomodaltext').innerText=text;
+        document.getElementById('infomodaltext').innerHTML=text;
     }
 }
 
