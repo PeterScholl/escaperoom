@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Editor Beispiel</title>
+</head>
+<body>
+
+<!-- Hier wird der Editor angezeigt -->
+<textarea id="editor"></textarea>
+
+<!-- Speichern-Button -->
+<button id="saveButton">Speichern</button>
+
+<!-- Anzeigebereich für den HTML-Inhalt -->
+<div id="output"></div>
+
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script>
+  // Initialisiere den CKEditor
+  CKEDITOR.replace('editor');
+
+  // Speichern des HTML-Inhalts beim Klicken auf den Speichern-Button
+  document.getElementById('saveButton').addEventListener('click', () => {
+    const editor = CKEDITOR.instances.editor;
+    const htmlContent = editor.getData();
+    
+    // Anzeigen des HTML-Inhalts
+    document.getElementById('output').innerHTML = `<strong>HTML-Inhalt:</strong><br>${htmlContent}`;
+  });
+</script>
+
+</body>
+</html>

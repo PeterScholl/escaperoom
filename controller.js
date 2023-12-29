@@ -7,8 +7,9 @@
 class Controller {
     constructor(name) {
         this.name = name;
-        this.game = new EscapeGame("Start",null);
-        this.game.setExample();
+        let game = new EscapeGame("Start",null);
+        game.setExample();
+        this.newGame(game);
 
     }
     /* init initialisiert:
@@ -98,6 +99,11 @@ class Controller {
         this.drawRoom();
         //ggf. Modal ausblenden
         this.showModal(false);
+        if (this.game.editAllowed) {
+            document.getElementById('menuitem_edit').style.display='block';
+        } else {
+            document.getElementById('menuitem_edit').style.display='none';
+        }
     }
 
     //Funktion die den eingegebenen Schlüssel auswertet

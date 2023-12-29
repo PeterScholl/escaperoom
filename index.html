@@ -14,7 +14,7 @@
         <li><a href="#" id="menuitem_load">Load</a></li>
         <li><a href="#" id="menuitem_save">Save</a></li>
         <li><a href="#" id="menuitem_reset">Reset</a></li>
-        <li><a href="#" id="menuitem_admin">Admin</a></li>
+        <li><a href="#" id="menuitem_edit">Edit</a></li>
         <li style="float:right"><a href="#" id="menuitem_about">About</a></li>
     </ul>
 
@@ -28,6 +28,11 @@
         </form>
     </div>
 
+    <!-- Adminbereich um das EscapeGame und dessen Räume zu erstellen oder zu bearbeiten -->
+    <div id="admin" style="display: none;">
+
+    </div>
+
     <!-- Modal zum Einblenden kleiner Infotexte mit Overlay hintergrund -->
     <div id="overlay"></div>
     <div id="infomodal">
@@ -35,9 +40,11 @@
         <button id="infomodalbutton">Bestätigen</button>
     </div>    
 
-    <!-- Script-Dateien in der richtigen Reihenfolge laden -->
+    <!-- Script-Dateien in der richtigen Reihenfolge 
+        (Grundlegende Klassen, dann Hilfsfunktionen, dann Controller) laden -->
     <script src="c_raum.js"></script>
     <script src="c_egame.js"></script>
+    <script src="hilfsfunktionen.js"></script>
     <script src="jsonfile.js"></script>
     <script src="controller.js"></script>
 
