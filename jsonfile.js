@@ -141,8 +141,3 @@ function parseJSONObjToRaum(jsonObjRaum) {
     }
     return newRaum;
 }
-
-//Funktion um den jest-Testfile zu prüfen
-function add(a,b) {
-    return a+b;
-}

@@ -1,6 +1,7 @@
 /* Die Klasse Controller bildt die Verbindung zwischen dem HTML-Dokument und
    der Programmierlogik
    Ich führe den Controller als Singleton aus - zwei machen keinen Sinn
+    - nach der Webseite https://www.heise.de/blog/GoF-Entwurfsmuster-in-JavaScript-Teil-1-Singleton-3079815.html
 */
 
 

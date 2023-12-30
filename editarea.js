@@ -2,6 +2,9 @@ function initEditArea() {
     let editArea = document.getElementById('editArea');
     // Löschen aller Child-Elemente
     editArea.innerHTML = "";
+    // Horzizontal Row zur Abgrenzung erzeugen
+    editArea.appendChild(document.createElement("hr"));
+
     //Raumauswahl erzeugen
     let selectElement = document.createElement("select");
 
@@ -13,10 +16,22 @@ function initEditArea() {
         option.text = "" + i + ":" + raumliste[i].name;
         selectElement.appendChild(option);
     }
-    document.getElementById('editArea').appendChild(selectElement);
+    selectElement.id="editAreaSelectRoom";
+    selectElement.addEventListener("change", raumgewaehlt);
+    editArea.appendChild(selectElement);
+    //Tabelle mit Raumname und Welcometext erstellen
+    //Name: | <Name> im Textfeld | Setzen
+    //Welcometext: | <Text> | Editor öffnen
+
+    //Rudimentäre Tabelle in der die Verweise auf die Folgeräume eingestellt und 
+    //hinzugefügt werden können
+
+    //Rudimentäre Tabelle mit den Infotexten 
 
 }
 
-function raumgewaehlt(nr) {
-    //Diesen Raum im oberen Bereich darstellen
+function raumgewaehlt() {
+    //Diesen Raum im Edit-Bereich darstellt
+    let selectedRoomID = document.getElementById("editAreaSelectRoom").value;
+    console.log("Ausgewählte RaumID:", selectedRoomID);
 }
