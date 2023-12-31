@@ -16,17 +16,29 @@ function initEditArea() {
         option.text = "" + i + ":" + raumliste[i].name;
         selectElement.appendChild(option);
     }
-    selectElement.id="editAreaSelectRoom";
+    selectElement.id = "editAreaSelectRoom";
     selectElement.addEventListener("change", raumgewaehlt);
     editArea.appendChild(selectElement);
+
     //Tabelle mit Raumname und Welcometext erstellen
-    //Name: | <Name> im Textfeld | Setzen
-    //Welcometext: | <Text> | Editor öffnen
+    let raumBasics = createTable(["Bezeichner", "Inhalt", "Aktionen"]);
+    raumBasics.id = "table_raumBasics";
+    editArea.appendChild(raumBasics);
 
     //Rudimentäre Tabelle in der die Verweise auf die Folgeräume eingestellt und 
     //hinzugefügt werden können
+    let tbl_folgeraeume = createTable(["key","Folgeraum"]);
+    tbl_folgeraeume.id = "table_folgeraeume";
+    editArea.appendChild(tbl_folgeraeume);
 
     //Rudimentäre Tabelle mit den Infotexten 
+    let tbl_infotexte = createTable(["key","Infotext","Aktionen"]);
+    tbl_infotexte.id = "table_folgeraeume";
+    editArea.appendChild(tbl_infotexte);
+
+
+    // Inhalte eintragen
+    raumgewaehlt();
 
 }
 
@@ -34,4 +46,49 @@ function raumgewaehlt() {
     //Diesen Raum im Edit-Bereich darstellt
     let selectedRoomID = document.getElementById("editAreaSelectRoom").value;
     console.log("Ausgewählte RaumID:", selectedRoomID);
+
+    let controller = Controller.getInstance();
+
+    let aktRaum = controller.game.raumliste[selectedRoomID];
+
+    // Obere Tabelle füllen (Raumgrundlagen)
+    //Name: | <Name> im Textfeld | Setzen
+    let raumBasics = document.getElementById("table_raumBasics");
+    let zeile = raumBasics.insertRow(-1);
+    let zelle = zeile.insertCell(0);
+    zelle.innerHTML = "Name";
+    zelle = zeile.insertCell(1);
+    zelle.innerHTML = aktRaum.name;
+    zelle = zeile.insertCell(2);
+    // Button für Speichern
+    let speichereNameButton = document.createElement("button");
+    speichereNameButton.innerHTML = "Speichern";
+    speichereNameButton.onclick = function () {
+        // Hier die Aktion für den Bearbeiten-Button
+        console.log("Speichere Namen geklickt für Raum:", aktRaum.name);
+        controller.setModalText("Speichere Namen geklickt für Raum:"+ aktRaum.name);
+        controller.showModal(true);
+    };
+    zelle.appendChild(speichereNameButton);
+
+    //Welcometext: | <Text> | Editor öffnen
+    zeile = raumBasics.insertRow(-1);
+    zelle = zeile.insertCell(0);
+    zelle.innerHTML = "Welcome-<br>text";
+    zelle = zeile.insertCell(1);
+    zelle.innerHTML = aktRaum.welcometext;
+    zelle = zeile.insertCell(2);
+    // Button für Speichern
+    let editWelcomeTextButton = document.createElement("button");
+    editWelcomeTextButton.innerHTML = "Edit";
+    editWelcomeTextButton.onclick = function () {
+        // Hier die Aktion für den Bearbeiten-Button
+        console.log("Edit Welcometext geklickt für Raum:", aktRaum.name);
+    };
+    zelle.appendChild(editWelcomeTextButton);
+
+    //TODO: Tabelle mit Folgeräumen füllen
+
+    //TODO: Tabelle mit Infotexten füllen
+
 }

@@ -41,3 +41,20 @@ const inputString = 'Hallo, Welt!';
 const hashValue = hashStringSync(inputString);
 console.log('Hash-Wert:', hashValue);
 */
+
+//Tabellenzeile für ein HTML-Dokument erstellen
+function createTable(listOfHeadCelltexts) {
+    // Tabelle erstellen
+    let tabelle = document.createElement("table");
+    let kopfzeile = tabelle.createTHead();
+    let kopfzeilenZeile = kopfzeile.insertRow();
+
+    // Schleife für Kopfzellen
+    for (var i = 0; i < listOfHeadCelltexts.length; i++) {
+        var kopfzelle = listOfHeadCelltexts[i];
+        var zellenElement = document.createElement("th");
+        zellenElement.innerHTML = kopfzelle;
+        kopfzeilenZeile.appendChild(zellenElement);
+    }
+    return tabelle;
+}

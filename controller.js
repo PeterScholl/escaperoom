@@ -180,7 +180,24 @@ class Controller {
         return document.getElementById('infomodal').style.display === 'block';
     }
     setModalText(text) {
-        document.getElementById('infomodaltext').innerHTML = text;
+        //Baut den Inhalt des Modals komplett neu auf mit dem übergebenen Text
+        //document.getElementById('infomodaltext').innerHTML = text;
+        let infomodaldiv = document.getElementById('infomodal');
+        infomodaldiv.innerHTML=""; //leeren
+        //Basisabschnitt
+        let modal_p = document.createElement("p");
+        modal_p.id = "infomodaltext";
+        modal_p.innerHTML = text;
+        infomodaldiv.appendChild(modal_p);
+        // Button
+        let bestaetigeModalButton = document.createElement("button");
+        bestaetigeModalButton.innerHTML = "Bestätigen";
+        bestaetigeModalButton.id = "infomodalbutton";
+        bestaetigeModalButton.addEventListener("click", function (event) {
+            Controller.getInstance().showModal(false);
+        });
+        
+        infomodaldiv.appendChild(bestaetigeModalButton);
     }
 }
 
