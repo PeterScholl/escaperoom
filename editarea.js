@@ -52,8 +52,12 @@ function raumgewaehlt() {
     let aktRaum = controller.game.raumliste[selectedRoomID];
 
     // Obere Tabelle füllen (Raumgrundlagen)
-    //Name: | <Name> im Textfeld | Setzen
+    // Alle Zeilen löschen
     let raumBasics = document.getElementById("table_raumBasics");
+    while (raumBasics.rows.length > 1) {
+        raumBasics.deleteRow(1); // 1, weil die Kopfzeile bei 0 beginnt
+    }
+    //Name: | <Name> im Textfeld | Setzen
     let zeile = raumBasics.insertRow(-1);
     let zelle = zeile.insertCell(0);
     zelle.innerHTML = "Name";
@@ -83,7 +87,15 @@ function raumgewaehlt() {
     editWelcomeTextButton.innerHTML = "Edit";
     editWelcomeTextButton.onclick = function () {
         // Hier die Aktion für den Bearbeiten-Button
+        controller.showEditorInModal(aktRaum.welcometext, function (text) {
+            console.log("in der anonymen Funktion von "+aktRaum.name+" mit text: "+text); 
+            aktRaum.welcometext = text;
+            //Controller.getInstance().setRaumWelcometext(selectedRoomID,text);
+            //Update - der Darstellung
+            raumgewaehlt();
+        });
         console.log("Edit Welcometext geklickt für Raum:", aktRaum.name);
+       
     };
     zelle.appendChild(editWelcomeTextButton);
 

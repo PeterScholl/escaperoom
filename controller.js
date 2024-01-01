@@ -164,10 +164,13 @@ class Controller {
 
     //Funktion zum anzeigen und ausblenden des Infomodals
     showModal(show) {
+        let self = this;
         if (show) {//anzeigen
             document.getElementById('infomodal').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
-            document.getElementById('infomodalbutton').focus();
+            if (document.getElementById('infomodalbutton')) {
+                document.getElementById('infomodalbutton').focus();
+            }
         } else { //ausblenden
             document.getElementById('infomodal').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
@@ -183,7 +186,7 @@ class Controller {
         //Baut den Inhalt des Modals komplett neu auf mit dem übergebenen Text
         //document.getElementById('infomodaltext').innerHTML = text;
         let infomodaldiv = document.getElementById('infomodal');
-        infomodaldiv.innerHTML=""; //leeren
+        infomodaldiv.innerHTML = ""; //leeren
         //Basisabschnitt
         let modal_p = document.createElement("p");
         modal_p.id = "infomodaltext";
@@ -196,8 +199,59 @@ class Controller {
         bestaetigeModalButton.addEventListener("click", function (event) {
             Controller.getInstance().showModal(false);
         });
-        
+
         infomodaldiv.appendChild(bestaetigeModalButton);
+    }
+
+    //öffnet einen Editor mit einer Basisdatei
+    // gibt null oder neuen Inhalt zurück
+    showEditorInModal(sourceHTML, returnResultFunction) {
+        //Kleiner Test
+        if (typeof(returnResultFunction) === 'function') {
+            console.log("CONT: returnResultFunction ist funktion");
+        } else {
+            console.log("CONT: returnResultFunction ist KEINE funktion"+returnResultFunction);
+        }
+        let self = this;
+        //Baut den Inhalt des Modals komplett neu auf mit dem übergebenen Text
+        let infomodaldiv = document.getElementById('infomodal');
+        infomodaldiv.innerHTML = ""; //leeren
+        //Textarea für eingabe
+        let modal_ta = document.createElement("textarea");
+        modal_ta.id = "editor";
+
+        infomodaldiv.appendChild(modal_ta);
+        // Initialisiere den CKEditor
+        modal_ta.innerHTML = sourceHTML;
+        CKEDITOR.replace('editor');
+
+
+        // Speichern - Button
+        let saveEditorContentButton = document.createElement("button");
+        saveEditorContentButton.innerHTML = "Speichern";
+        saveEditorContentButton.id = "editorInModalSpeichernButton";
+        saveEditorContentButton.addEventListener("click", function (event) {
+            //Controller.getInstance().showModal(false);
+            //TODO: Inhalt des Editors zurückgeben und Modal schliessen
+            const editor = CKEDITOR.instances.editor;
+            const htmlContent = editor.getData();
+            if (typeof (returnResultFunction) === 'function') {
+                console.log("ReturnResult-Funktion aufrufen");
+                console.log(htmlContent);
+                returnResultFunction(htmlContent);
+            }
+            self.showModal(false);
+        });
+
+        infomodaldiv.appendChild(saveEditorContentButton);
+        self.showModal(true);
+
+    }
+    
+    setRaumWelcometext(raumId,text) {
+        console.log("CONT: setRaumWelcomeID "+raumId+" - "+text);
+        let self = this;
+        self.game.raumliste[raumId].welcometext = text;
     }
 }
 

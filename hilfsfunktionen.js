@@ -58,3 +58,4 @@ function createTable(listOfHeadCelltexts) {
     }
     return tabelle;
 }
+

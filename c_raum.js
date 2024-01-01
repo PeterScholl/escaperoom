@@ -43,7 +43,7 @@ class Raum {
         //Wenn der key zu einem Infotext gehört, wird dieser zurückgegeben
         //Hash-Key if needed
         let hkey = key;
-        if (heysHashed) {
+        if (this.keysHashed) {
             hkey = hashStringSync(key);
         }
         console.log("RAUM: Teste auf Infotext:" + key + "-" + this.infotexte[hkey]);
@@ -54,7 +54,7 @@ class Raum {
         //Wenn der key zu einem Folgeraum gehört, dann wird dieser zurückgegeben
         //Hash-Key if needed
         let hkey = key;
-        if (heysHashed) {
+        if (this.keysHashed) {
             hkey = hashStringSync(key);
         }
         let folgeraumID = this.folgeraeume[hkey];
@@ -85,5 +85,13 @@ class Raum {
             }
             this.infotexte[hkey] = infotext;
         }
+    }
+
+    /**
+     * @param {string} text
+     */
+    set welcometext(text) {
+        console.log("RAUM: "+this.name+" in set welcometext:"+text);
+        this.welcometext=text;
     }
 }
