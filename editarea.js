@@ -39,7 +39,7 @@ function raumgewaehlt() {
 
     tabelleFolgeraeumeFuellen();
 
-    //TODO: Tabelle mit Infotexten füllen
+    //  [ ]: Tabelle mit Infotexten füllen
 
 }
 
@@ -61,7 +61,7 @@ function tabelleRaumgrundlagenFuellen() {
     let zelle = zeile.insertCell(0);
     zelle.innerHTML = "Name";
     zelle = zeile.insertCell(1);
-    // TODO Editierbar machen
+    // TODO Raumname Editierbar machen
     zelle.innerHTML = aktRaum.name;
     zelle = zeile.insertCell(2);
     // Button für Speichern
@@ -122,7 +122,6 @@ function tabelleFolgeraeumeFuellen() {
         zelle = zeile.insertCell(1);
         let folgeraumSelector = selectElementRaumauswahl();
         folgeraumSelector.selectedIndex = folgeraumID;
-        //TODO: OnChangeAction implementieren
         zelle.appendChild(folgeraumSelector);
         folgeraumSelector.addEventListener("change", (event) => folgeraumAendern(event,aktRaum,key,folgeraumSelector.selectedIndex));
 

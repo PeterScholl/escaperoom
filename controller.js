@@ -230,8 +230,7 @@ class Controller {
         saveEditorContentButton.innerHTML = "Speichern";
         saveEditorContentButton.id = "editorInModalSpeichernButton";
         saveEditorContentButton.addEventListener("click", function (event) {
-            //Controller.getInstance().showModal(false);
-            //TODO: Inhalt des Editors zurückgeben und Modal schliessen
+            //Inhalt des Editors zurückgeben und Modal schliessen
             const editor = CKEDITOR.instances.editor;
             const htmlContent = editor.getData();
             if (typeof (returnResultFunction) === 'function') {
