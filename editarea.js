@@ -6,27 +6,39 @@ function initEditArea() {
     // editArea.appendChild(document.createElement("hr"));
 
     //Raumauswahl erzeugen
+    let p = document.createElement("p");
+    p.innerHTML = "Raumauswahl:";
     let selectElement = selectElementRaumauswahl();
     selectElement.id = "editAreaSelectRoom";
     //selectElement.selectedIndex = 0;
     selectElement.addEventListener("change", raumgewaehlt);
-    editArea.appendChild(selectElement);
+    p.appendChild(selectElement);
+    editArea.appendChild(p);
 
     //Tabelle mit Raumname und Welcometext erstellen
+    p = document.createElement("p");
+    p.innerHTML = "Basisdaten des Raums:<br>";
     let raumBasics = createTable(["Bezeichner", "Inhalt", "Aktionen"]);
     raumBasics.id = "table_raumBasics";
-    editArea.appendChild(raumBasics);
+    p.appendChild(raumBasics);
+    editArea.appendChild(p);
 
     //Rudimentäre Tabelle in der die Verweise auf die Folgeräume eingestellt und 
     //hinzugefügt werden können
-    let tbl_folgeraeume = createTable(["key","Folgeraum"]);
+    p = document.createElement("p");
+    p.innerHTML = "Folger&auml;ume zu Schl&uuml;sseln:<br>";
+    let tbl_folgeraeume = createTable(["key", "Folgeraum"]);
     tbl_folgeraeume.id = "table_folgeraeume";
-    editArea.appendChild(tbl_folgeraeume);
+    p.appendChild(tbl_folgeraeume);
+    editArea.appendChild(p);
 
     //Rudimentäre Tabelle mit den Infotexten 
-    let tbl_infotexte = createTable(["key","Infotext","Aktionen"]);
-    tbl_infotexte.id = "table_folgeraeume";
-    editArea.appendChild(tbl_infotexte);
+    p = document.createElement("p");
+    p.innerHTML = "Infotexte zu Schl&uuml;sseln:<br>";
+    let tbl_infotexte = createTable(["key", "Infotext", "Aktionen"]);
+    tbl_infotexte.id = "table_infotexte";
+    p.appendChild(tbl_infotexte);
+    editArea.appendChild(p);
 
 
     // Inhalte eintragen
@@ -39,8 +51,7 @@ function raumgewaehlt() {
 
     tabelleFolgeraeumeFuellen();
 
-    //  [ ]: Tabelle mit Infotexten füllen
-
+    tabelleInfotexteFuellen();
 }
 
 function tabelleRaumgrundlagenFuellen() {
@@ -61,17 +72,36 @@ function tabelleRaumgrundlagenFuellen() {
     let zelle = zeile.insertCell(0);
     zelle.innerHTML = "Name";
     zelle = zeile.insertCell(1);
-    // TODO Raumname Editierbar machen
-    zelle.innerHTML = aktRaum.name;
+    let form = document.createElement("form");
+    form.id = "editRaumname";
+    form.style.width = "100%";
+    form.onsubmit = function (event) {
+        console.log("Raumname geändert:", aktRaum.name);
+        aktRaum.name = input.value;
+        tabelleRaumgrundlagenFuellen();
+        updateRaumAuswahl();
+        return false; //damit keine Standardaktion ausgeführt wird
+    };
+    let input = document.createElement("input");
+    input.style.width="100%";
+    input.type = "text";
+    input.id = "editRaumnameInput";
+    input.name = "editRaumnameInput";
+    input.value = aktRaum.name;
+    form.appendChild(input);
+
+    zelle.appendChild(form);
+
     zelle = zeile.insertCell(2);
     // Button für Speichern
     let speichereNameButton = document.createElement("button");
     speichereNameButton.innerHTML = "Speichern";
     speichereNameButton.onclick = function () {
         // Hier die Aktion für den Bearbeiten-Button
-        console.log("Speichere Namen geklickt für Raum:", aktRaum.name);
-        controller.setModalText("Speichere Namen geklickt für Raum:"+ aktRaum.name);
-        controller.showModal(true);
+        console.log("Raumname geändert:", aktRaum.name);
+        aktRaum.name = input.value;
+        tabelleRaumgrundlagenFuellen();
+        updateRaumAuswahl();
     };
     zelle.appendChild(speichereNameButton);
 
@@ -82,20 +112,19 @@ function tabelleRaumgrundlagenFuellen() {
     zelle = zeile.insertCell(1);
     zelle.innerHTML = aktRaum.welcometext;
     zelle = zeile.insertCell(2);
-    // Button für Speichern
+    // Button für Editieren
     let editWelcomeTextButton = document.createElement("button");
     editWelcomeTextButton.innerHTML = "Edit";
     editWelcomeTextButton.onclick = function () {
         // Hier die Aktion für den Bearbeiten-Button
         controller.showEditorInModal(aktRaum.welcometext, function (text) {
-            console.log("in der anonymen Funktion von "+aktRaum.name+" mit text: "+text); 
+            console.log("in der anonymen Funktion von " + aktRaum.name + " mit text: " + text);
             aktRaum.welcometext = text;
             //Controller.getInstance().setRaumWelcometext(selectedRoomID,text);
             //Update - der Darstellung
             tabelleRaumgrundlagenFuellen();
         });
         console.log("Edit Welcometext geklickt für Raum:", aktRaum.name);
-       
     };
     zelle.appendChild(editWelcomeTextButton);
 }
@@ -113,17 +142,18 @@ function tabelleFolgeraeumeFuellen() {
         tblFolgeraeume.deleteRow(1); // 1, weil die Kopfzeile bei 0 beginnt
     }
     //Eintrag für jede Zeile in folgeraeume
-    for (const [key,folgeraumID] of Object.entries(aktRaum.folgeraeume)) {
+
+    for (const [key, folgeraumID] of Object.entries(aktRaum.folgeraeume)) {
         let zeile = tblFolgeraeume.insertRow(-1);
         //Zelle für den Key
         let zelle = zeile.insertCell(0);
-        zelle.innerHTML = key;
+        zelle.innerHTML = "<a href=\"javascript:deleteFolgeraumKey('" + key + "');\" class=\"text-danger\" role=\"button\">x</a> " + key;
         //Zelle für den Folgeraum
         zelle = zeile.insertCell(1);
         let folgeraumSelector = selectElementRaumauswahl();
         folgeraumSelector.selectedIndex = folgeraumID;
         zelle.appendChild(folgeraumSelector);
-        folgeraumSelector.addEventListener("change", (event) => folgeraumAendern(event,aktRaum,key,folgeraumSelector.selectedIndex));
+        folgeraumSelector.addEventListener("change", (event) => folgeraumAendern(event, aktRaum, key, folgeraumSelector.selectedIndex));
 
     }
 
@@ -131,10 +161,10 @@ function tabelleFolgeraeumeFuellen() {
     zeile = tblFolgeraeume.insertRow(-1);
     zelle = zeile.insertCell(0);
     let form = document.createElement("form");
-    form.id="addNewFolgeraumKeyForm";
+    form.id = "addNewFolgeraumKeyForm";
     form.onsubmit = function (event) {
-        aktRaum.setFolgeraum(input.value,0);
-        console.log("Neuer Key ("+input.value+") erstellt für:", aktRaum.name);
+        aktRaum.setFolgeraum(input.value, 0);
+        console.log("Neuer Key (" + input.value + ") erstellt für:", aktRaum.name);
         tabelleFolgeraeumeFuellen();
         return false; //damit keine Standardaktion ausgeführt wird
     };
@@ -151,30 +181,143 @@ function tabelleFolgeraeumeFuellen() {
     saveNewKeyButton.innerHTML = "erstellen";
     saveNewKeyButton.onclick = function () {
         // Hier die Aktion für den erstellen-Button
-        aktRaum.setFolgeraum(input.value,0);
-        console.log("Neuer Key ("+input.value+") erstellt für:", aktRaum.name);
+        aktRaum.setFolgeraum(input.value, 0);
+        console.log("Neuer Key (" + input.value + ") erstellt für:", aktRaum.name);
         tabelleFolgeraeumeFuellen();
     };
     zelle.appendChild(saveNewKeyButton);
 }
 
-function selectElementRaumauswahl() {
-        //Raumauswahl erzeugen
-        let selectElement = document.createElement("select");
+function tabelleInfotexteFuellen() {
+    let selectedRoomID = document.getElementById("editAreaSelectRoom").value;
 
-        // Iteriere über die Liste der Räume und füge jede Option dem Select-Element hinzu
-        let raumliste = Controller.getInstance().game.raumliste;
-        for (var i = 0; i < raumliste.length; i++) {
-            var option = document.createElement("option");
-            option.value = i;
-            option.text = "" + i + ":" + raumliste[i].name;
-            selectElement.appendChild(option);
-        }
-        return selectElement
+    let controller = Controller.getInstance();
+
+    let aktRaum = controller.game.raumliste[selectedRoomID];
+
+    // Alle Zeilen löschen
+    let tblInfotexte = document.getElementById("table_infotexte");
+    while (tblInfotexte.rows.length > 1) {
+        tblInfotexte.deleteRow(1); // 1, weil die Kopfzeile bei 0 beginnt
+    }
+    //Eintrag für jede Zeile in Infotexte
+    console.log("EDITAREA: Zeilen für Infotexte füllen");
+    for (const [key, infotext] of Object.entries(aktRaum.infotexte)) {
+        console.log("EDITAREA: Zeile für infotext zu " + key);
+        let zeile = tblInfotexte.insertRow(-1);
+        //Zelle für den Key
+        let zelle = zeile.insertCell(0);
+        // Mit Delete-Button InfotextKey
+        zelle.innerHTML = "<a href=\"javascript:deleteInfotextKey('" + key + "');\" class=\"text-danger\" role=\"button\">x</a> " + key;
+        //Zelle für den Infotext
+        zelle = zeile.insertCell(1);
+
+        zelle.innerHTML = infotext;
+        //Zelle für die Aktionsbuttons
+        zelle = zeile.insertCell(2);
+        // Button für Editieren
+        let editInfotextButton = document.createElement("button");
+        editInfotextButton.innerHTML = "Edit";
+        editInfotextButton.onclick = function () {
+            // Hier die Aktion für den Bearbeiten-Button
+            controller.showEditorInModal(infotext, function (text) {
+                aktRaum.infotexte[key] = text;
+                //Update - der Darstellung
+                tabelleInfotexteFuellen();
+            });
+            console.log("Edit Infotext geklickt für Key:", key);
+        };
+        zelle.appendChild(editInfotextButton);
+
+    }
+
+    //Zeile mit: Hinzufügen eines Keys - Infotext wird mit "Info zu <key>" gesetzt
+    zeile = tblInfotexte.insertRow(-1);
+    zelle = zeile.insertCell(0);
+    let form = document.createElement("form");
+    form.id = "addNewInfotextKeyForm";
+    form.onsubmit = function (event) {
+        aktRaum.setInfotext(input.value, "Infotext zu " + input.value);
+        console.log("Neuer Infotext-Key (" + input.value + ") erstellt für:", aktRaum.name);
+        tabelleInfotexteFuellen();
+        return false; //damit keine Standardaktion ausgeführt wird
+    };
+    let input = document.createElement("input");
+    input.type = "text";
+    input.id = "newInfotextKeyInput";
+    input.name = "newInfotextKeyInput";
+    form.appendChild(input);
+
+    zelle.appendChild(form);
+    zelle = zeile.insertCell(1); //Leerzelle
+    zelle = zeile.insertCell(2);
+    // Button für Key übernehmen
+    let saveNewKeyButton = document.createElement("button");
+    saveNewKeyButton.innerHTML = "erstellen";
+    saveNewKeyButton.onclick = function () {
+        // Hier die Aktion für den erstellen-Button
+        aktRaum.setInfotext(input.value, "Infotext zu " + input.value);
+        console.log("Neuer Infotext-Key (" + input.value + ") erstellt für:", aktRaum.name);
+        tabelleInfotexteFuellen();
+    };
+    zelle.appendChild(saveNewKeyButton);
+}
+
+function selectElementRaumauswahl() {
+    //Raumauswahl erzeugen
+    let selectElement = document.createElement("select");
+
+    // Iteriere über die Liste der Räume und füge jede Option dem Select-Element hinzu
+    let raumliste = Controller.getInstance().game.raumliste;
+    for (var i = 0; i < raumliste.length; i++) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = "" + i + ":" + raumliste[i].name;
+        selectElement.appendChild(option);
+    }
+    return selectElement
 }
 
 function folgeraumAendern(event, raum, key, raumid) {
-    console.log("folgeraumAendern aufgerufen für raum "+raum.name+" event: "+event);
-    raum.folgeraeume[key]=raumid;
+    console.log("folgeraumAendern aufgerufen für raum " + raum.name + " event: " + event);
+    raum.folgeraeume[key] = raumid;
     console.log("folgeraum - angeblich geändert");
+}
+
+function deleteFolgeraumKey(key) {
+    //Folgeraum des aktuellen Editraums löschen
+    let selectedRoomID = document.getElementById("editAreaSelectRoom").value;
+
+    let controller = Controller.getInstance();
+
+    let aktRaum = controller.game.raumliste[selectedRoomID];
+    aktRaum.delFolgeraum(key);
+    tabelleFolgeraeumeFuellen(); //neu aufbauen - da fehlt ja jetzt was
+}
+
+function deleteInfotextKey(key) {
+    //Infotext des aktuellen Editraums löschen
+    let selectedRoomID = document.getElementById("editAreaSelectRoom").value;
+
+    let controller = Controller.getInstance();
+
+    let aktRaum = controller.game.raumliste[selectedRoomID];
+    aktRaum.delInfotext(key);
+    tabelleInfotexteFuellen(); //neu aufbauen - da fehlt ja jetzt was
+}
+
+//Aktualisiert die Raumauswahl z.B. nach einer erfolgten Namensänderung
+function updateRaumAuswahl() {
+    //Alten Selector holen - zum Ersetzen und Wert übernehmen
+    let alterSelector = document.getElementById('editAreaSelectRoom');
+
+    //neuen Selector erzeugen 
+    let newSelector = selectElementRaumauswahl();
+    newSelector.id = "editAreaSelectRoom";
+    newSelector.addEventListener("change", raumgewaehlt);
+    //ausgwählte Option korrekt setzen
+    newSelector.selectedIndex = alterSelector.selectedIndex;
+    
+    //...und diesen ersetzen
+    alterSelector.replaceWith(newSelector); 
 }

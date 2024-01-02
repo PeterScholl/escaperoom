@@ -58,8 +58,8 @@ class Raum {
             hkey = hashStringSync(key);
         }
         let folgeraumID = this.folgeraeume[hkey];
-        console.log("FolgeraumID: "+folgeraumID+" ist Integer "+Number.isInteger(folgeraumID));
-        if (Number.isInteger(folgeraumID) && folgeraumID>=0) {
+        console.log("FolgeraumID: " + folgeraumID + " ist Integer " + Number.isInteger(folgeraumID));
+        if (Number.isInteger(folgeraumID) && folgeraumID >= 0) {
             return folgeraumID;
         }
         // sonst -1
@@ -77,22 +77,36 @@ class Raum {
         }
     }
 
+    //Löscht den Folgeraumkey
+    delFolgeraum(key) {
+        console.log("RAUM: Folgeraumkey löschen: " + key);
+        delete this.folgeraeume[key];
+    }
+
     //Setzt einen Infotext für einen gegebenen Key
     setInfotext(key, infotext) {
-        if (infotext instanceof String) {
+        if (typeof(infotext)==='string') {
             let hkey = key;
             if (this.keysHashed) {
                 hkey = hashStringSync(key);
             }
             this.infotexte[hkey] = infotext;
+        } else {
+            console.log("RAUM: setInfoText war kein String - "+infotext+" sondern: "+typeof(infotext));
         }
+    }
+
+    //Löscht den Infotextkey
+    delInfotext(key) {
+        console.log("RAUM: Infotextkey löschen: " + key);
+        delete this.infotexte[key];
     }
 
     /**
      * @param {string} text
      */
     set welcometext(text) {
-        console.log("RAUM: "+this.name+" in set welcometext:"+text);
-        this.welcometext=text;
+        console.log("RAUM: " + this.name + " in set welcometext:" + text);
+        this.welcometext = text;
     }
 }

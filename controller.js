@@ -11,6 +11,20 @@ class Controller {
         if (typeof Controller.instance === 'object') {
             return Controller.instance;
         } else {
+            //erster und einziger Aufruf der Initialisierung
+            let dest = getUrlParam("url");
+            console.log("JSON laden von " + dest);
+            if (dest) {
+                //TODO JSON von URL laden implementieren
+                fetch(dest, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(response => console.log(JSON.stringify(response)))
+            }
             this.name = name;
             let game = new EscapeGame("Start", null);
             game.setExample();
@@ -206,10 +220,10 @@ class Controller {
     // gibt null oder neuen Inhalt zurück
     showEditorInModal(sourceHTML, returnResultFunction) {
         //Kleiner Test
-        if (typeof(returnResultFunction) === 'function') {
+        if (typeof (returnResultFunction) === 'function') {
             console.log("CONT: returnResultFunction ist funktion");
         } else {
-            console.log("CONT: returnResultFunction ist KEINE funktion"+returnResultFunction);
+            console.log("CONT: returnResultFunction ist KEINE funktion" + returnResultFunction);
         }
         let self = this;
         //Baut den Inhalt des Modals komplett neu auf mit dem übergebenen Text
@@ -245,13 +259,13 @@ class Controller {
         self.showModal(true);
 
     }
-    
-    setRaumWelcometext(raumId,text) {
-        console.log("CONT: setRaumWelcomeID "+raumId+" - "+text);
+
+    setRaumWelcometext(raumId, text) {
+        console.log("CONT: setRaumWelcomeID " + raumId + " - " + text);
         let self = this;
         self.game.raumliste[raumId].welcometext = text;
     }
-    
+
     enableListenerKeyFeld(bool) {
         let self = this;
         if (bool) { //aktivieren

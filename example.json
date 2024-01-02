@@ -1,0 +1,31 @@
+{
+  "editAllowed": true,
+  "startraumID": 0,
+  "raumliste": [
+    {
+      "keysHashed": false,
+      "welcometext": "Du bist in einem dunklen Startraum, der Schalter für das Licht ist binär. Was steht darauf?",
+      "name": "Startraum Beispielgame",
+      "folgeraeume": {
+        "1": 1,
+        "eins": 1
+      },
+      "infotexte": {
+        "0": "so geht es aus"
+      },
+      "istZiel": false
+    },
+    {
+      "keysHashed": false,
+      "welcometext": "Du bist am Ziel und hast die Erleuchtung gefunden",
+      "name": "Zielraum - Beispielgame",
+      "folgeraeume": {},
+      "infotexte": {
+        "help": "Gib einen Schlüssel ein um ihn auszuprobieren!"
+      },
+      "istZiel": true
+    }
+  ],
+  "aktuellerRaumID": 0,
+  "name": "Beispiel-Escape-Game"
+}
