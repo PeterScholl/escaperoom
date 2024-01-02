@@ -48,15 +48,9 @@ class Controller {
             menuItems[i].addEventListener("click", (event) => self.reactMenuClick(event));
         }
 
-        // Listener für das Keyfeld
-        document.getElementById('keyfeld').addEventListener('keypress', function (event) {
-            // Überprüfe, ob die gedrückte Taste die Enter-Taste ist
-            if (event.key === 'Enter') {
-                // Verhindert das Standardverhalten des Formulars (neu laden)
-                event.preventDefault();
-                self.keyauswerten(document.getElementById('keyfeld').value);
-            }
-        });
+        // Listener für das Keyfeld aktivieren (Reagiert auf Enter)
+        this.enableListenerKeyFeld(true);
+
 
         // Button des Modals bzw. click daneben
         document.getElementById('infomodalbutton').addEventListener("click", function (event) {
@@ -116,11 +110,16 @@ class Controller {
     //Die Editieransicht ein oder Ausschalten und initialisieren
     toggleEditView() {
         let self = this;
+        let mainArea = document.getElementById('mainArea');
         let editArea = document.getElementById('editArea');
         if (editArea.style.display === 'block') {
+            //EditArea ausblenden
+            mainArea.style.display = 'block';
             editArea.style.display = 'none';
             self.drawRoom();
         } else {
+            //EditArea einblenden
+            mainArea.style.display = 'none';
             editArea.style.display = 'block';
             initEditArea();
         }
@@ -252,6 +251,22 @@ class Controller {
         console.log("CONT: setRaumWelcomeID "+raumId+" - "+text);
         let self = this;
         self.game.raumliste[raumId].welcometext = text;
+    }
+    
+    enableListenerKeyFeld(bool) {
+        let self = this;
+        if (bool) { //aktivieren
+            document.getElementById('keyfeld').addEventListener('keypress', function (event) {
+                // Überprüfe, ob die gedrückte Taste die Enter-Taste ist
+                if (event.key === 'Enter') {
+                    // Verhindert das Standardverhalten des Formulars (neu laden)
+                    event.preventDefault();
+                    self.keyauswerten(document.getElementById('keyfeld').value);
+                }
+            });
+        } else { //deaktivieren
+            document.getElementById('keyfeld').removeEventListener('keypress');
+        }
     }
 }
 

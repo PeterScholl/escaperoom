@@ -58,7 +58,8 @@ class Raum {
             hkey = hashStringSync(key);
         }
         let folgeraumID = this.folgeraeume[hkey];
-        if (folgeraumID) {
+        console.log("FolgeraumID: "+folgeraumID+" ist Integer "+Number.isInteger(folgeraumID));
+        if (Number.isInteger(folgeraumID) && folgeraumID>0) {
             return folgeraumID;
         }
         // sonst -1
@@ -77,7 +78,7 @@ class Raum {
     }
 
     //Setzt einen Infotext für einen gegebenen Key
-    setFolgeraum(key, infotext) {
+    setInfotext(key, infotext) {
         if (infotext instanceof String) {
             let hkey = key;
             if (this.keysHashed) {

@@ -34,6 +34,7 @@ class EscapeGame {
     testKeyOnLock(key) {
         console.log("GAME: Schlüssel auf Schloss prüfen:"+key);
         let folgeraumID = this.raumliste[this.aktuellerRaumID].testKeyOnLock(key);
+        console.log("GAME: erhaltene Folgeraumid - "+folgeraumID);
         if (folgeraumID>=0) {
             this.aktuellerRaumID = folgeraumID;
             return true; //Success melden

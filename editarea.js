@@ -6,17 +6,9 @@ function initEditArea() {
     editArea.appendChild(document.createElement("hr"));
 
     //Raumauswahl erzeugen
-    let selectElement = document.createElement("select");
-
-    // Iteriere über die Liste der Räume und füge jede Option dem Select-Element hinzu
-    let raumliste = Controller.getInstance().game.raumliste;
-    for (var i = 0; i < raumliste.length; i++) {
-        var option = document.createElement("option");
-        option.value = i;
-        option.text = "" + i + ":" + raumliste[i].name;
-        selectElement.appendChild(option);
-    }
+    let selectElement = selectElementRaumauswahl();
     selectElement.id = "editAreaSelectRoom";
+    //selectElement.selectedIndex = 0;
     selectElement.addEventListener("change", raumgewaehlt);
     editArea.appendChild(selectElement);
 
@@ -43,15 +35,22 @@ function initEditArea() {
 }
 
 function raumgewaehlt() {
-    //Diesen Raum im Edit-Bereich darstellt
+    tabelleRaumgrundlagenFuellen();
+
+    tabelleFolgeraeumeFuellen();
+
+    //TODO: Tabelle mit Infotexten füllen
+
+}
+
+function tabelleRaumgrundlagenFuellen() {
     let selectedRoomID = document.getElementById("editAreaSelectRoom").value;
-    console.log("Ausgewählte RaumID:", selectedRoomID);
 
     let controller = Controller.getInstance();
 
     let aktRaum = controller.game.raumliste[selectedRoomID];
 
-    // Obere Tabelle füllen (Raumgrundlagen)
+    // ***** Obere Tabelle füllen (Raumgrundlagen) *****
     // Alle Zeilen löschen
     let raumBasics = document.getElementById("table_raumBasics");
     while (raumBasics.rows.length > 1) {
@@ -62,6 +61,7 @@ function raumgewaehlt() {
     let zelle = zeile.insertCell(0);
     zelle.innerHTML = "Name";
     zelle = zeile.insertCell(1);
+    // TODO Editierbar machen
     zelle.innerHTML = aktRaum.name;
     zelle = zeile.insertCell(2);
     // Button für Speichern
@@ -75,7 +75,7 @@ function raumgewaehlt() {
     };
     zelle.appendChild(speichereNameButton);
 
-    //Welcometext: | <Text> | Editor öffnen
+    //Zeile mit: Welcometext: | <Text> | Editor öffnen
     zeile = raumBasics.insertRow(-1);
     zelle = zeile.insertCell(0);
     zelle.innerHTML = "Welcome-<br>text";
@@ -92,15 +92,90 @@ function raumgewaehlt() {
             aktRaum.welcometext = text;
             //Controller.getInstance().setRaumWelcometext(selectedRoomID,text);
             //Update - der Darstellung
-            raumgewaehlt();
+            tabelleRaumgrundlagenFuellen();
         });
         console.log("Edit Welcometext geklickt für Raum:", aktRaum.name);
        
     };
     zelle.appendChild(editWelcomeTextButton);
+}
 
-    //TODO: Tabelle mit Folgeräumen füllen
+function tabelleFolgeraeumeFuellen() {
+    let selectedRoomID = document.getElementById("editAreaSelectRoom").value;
 
-    //TODO: Tabelle mit Infotexten füllen
+    let controller = Controller.getInstance();
 
+    let aktRaum = controller.game.raumliste[selectedRoomID];
+
+    // Alle Zeilen löschen
+    let tblFolgeraeume = document.getElementById("table_folgeraeume");
+    while (tblFolgeraeume.rows.length > 1) {
+        tblFolgeraeume.deleteRow(1); // 1, weil die Kopfzeile bei 0 beginnt
+    }
+    //Eintrag für jede Zeile in folgeraeume
+    for (const [key,folgeraumID] of Object.entries(aktRaum.folgeraeume)) {
+        let zeile = tblFolgeraeume.insertRow(-1);
+        //Zelle für den Key
+        let zelle = zeile.insertCell(0);
+        zelle.innerHTML = key;
+        //Zelle für den Folgeraum
+        zelle = zeile.insertCell(1);
+        let folgeraumSelector = selectElementRaumauswahl();
+        folgeraumSelector.selectedIndex = folgeraumID;
+        //TODO: OnChangeAction implementieren
+        zelle.appendChild(folgeraumSelector);
+        folgeraumSelector.addEventListener("change", (event) => folgeraumAendern(event,aktRaum,key,folgeraumSelector.selectedIndex));
+
+    }
+
+    //Zeile mit: Hinzufügen eines Keys - Raumpaar wird dann erstellt
+    zeile = tblFolgeraeume.insertRow(-1);
+    zelle = zeile.insertCell(0);
+    let form = document.createElement("form");
+    form.id="addNewFolgeraumKeyForm";
+    form.onsubmit = function (event) {
+        aktRaum.setFolgeraum(input.value,0);
+        console.log("Neuer Key ("+input.value+") erstellt für:", aktRaum.name);
+        tabelleFolgeraeumeFuellen();
+        return false; //damit keine Standardaktion ausgeführt wird
+    };
+    let input = document.createElement("input");
+    input.type = "text";
+    input.id = "newFolgeraumKeyInput";
+    input.name = "newFolgeraumKeyInput";
+    form.appendChild(input);
+
+    zelle.appendChild(form);
+    zelle = zeile.insertCell(1);
+    // Button für Key übernehmen
+    let saveNewKeyButton = document.createElement("button");
+    saveNewKeyButton.innerHTML = "erstellen";
+    saveNewKeyButton.onclick = function () {
+        // Hier die Aktion für den erstellen-Button
+        aktRaum.setFolgeraum(input.value,0);
+        console.log("Neuer Key ("+input.value+") erstellt für:", aktRaum.name);
+        tabelleFolgeraeumeFuellen();
+    };
+    zelle.appendChild(saveNewKeyButton);
+}
+
+function selectElementRaumauswahl() {
+        //Raumauswahl erzeugen
+        let selectElement = document.createElement("select");
+
+        // Iteriere über die Liste der Räume und füge jede Option dem Select-Element hinzu
+        let raumliste = Controller.getInstance().game.raumliste;
+        for (var i = 0; i < raumliste.length; i++) {
+            var option = document.createElement("option");
+            option.value = i;
+            option.text = "" + i + ":" + raumliste[i].name;
+            selectElement.appendChild(option);
+        }
+        return selectElement
+}
+
+function folgeraumAendern(event, raum, key, raumid) {
+    console.log("folgeraumAendern aufgerufen für raum "+raum.name+" event: "+event);
+    raum.folgeraeume[key]=raumid;
+    console.log("folgeraum - angeblich geändert");
 }
