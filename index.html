@@ -14,18 +14,23 @@
         <li><a href="#" id="menuitem_load">Load</a></li>
         <li><a href="#" id="menuitem_save">Save</a></li>
         <li><a href="#" id="menuitem_reset">Reset</a></li>
-        <li><a href="#" id="menuitem_admin">Admin</a></li>
+        <li><a href="#" id="menuitem_edit">Edit</a></li>
         <li style="float:right"><a href="#" id="menuitem_about">About</a></li>
     </ul>
 
     <!-- Hauptinhalt der Seite - 30px oben wegen des Menüs -->
-    <div style="text-align:center;padding:20px;margin-top:30px;">
+    <div id="mainArea" style="text-align:center;padding:20px;margin-top:30px;">
         <p><h1 id="raumname">Raumname</h1></p>
         <p><div id="infotext"></div></p>
         <form id="checkKey">
             <label for="keyfeld">Schl&uuml;ssel eingeben:</label>
             <input type="text" id="keyfeld" name="keyfeld" required  autofocus>
         </form>
+    </div>
+
+    <!-- Editbereich um das EscapeGame und dessen Räume zu erstellen oder zu bearbeiten -->
+    <div id="editArea" style="display: none;padding:20px;margin-top:30px;">
+
     </div>
 
     <!-- Modal zum Einblenden kleiner Infotexte mit Overlay hintergrund -->
@@ -35,10 +40,16 @@
         <button id="infomodalbutton">Bestätigen</button>
     </div>    
 
-    <!-- Script-Dateien in der richtigen Reihenfolge laden -->
+    <!-- Editor für HTML laden CKEditor -->
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    
+    <!-- Script-Dateien in der richtigen Reihenfolge 
+        (Grundlegende Klassen, dann Hilfsfunktionen, dann Controller) laden -->
     <script src="c_raum.js"></script>
     <script src="c_egame.js"></script>
+    <script src="hilfsfunktionen.js"></script>
     <script src="jsonfile.js"></script>
+    <script src="editarea.js"></script>
     <script src="controller.js"></script>
 
 </body>

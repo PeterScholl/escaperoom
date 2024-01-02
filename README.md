@@ -9,3 +9,12 @@ Es gibt eine Klasse für den
 Ich habe die Räume in einer Liste gespeichert und der Folgeraum nach einem erfolgreichen Schlüssel wird als ID zurück gegeben, da mir das für die Speicherung in einer JSON-Datei vorteilhaft erschien.
 
 **Dateioperationen** werden in einer Hilfsdatei als Funktionen definiert.
+
+# Was noch zu tun ist/wäre bzw. Ideen
+kleine Liste für Ideen und Aufgaben
+* JSON-Files von URL lesen
+* schönen Beispielraum erstellen
+* evtl. Schlösser oder Locks einbauen
+* liste von offenen Räumen, die man per Click betreten kann?!
+* Eine Erfolgsinformation bei einem richtigen Schlüssel ausgeben (automatisch schliessen?)
+* Kleine Infomodals am oberen Rand (erfolgreiche Namensänderung ...)

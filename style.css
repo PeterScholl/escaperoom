@@ -63,3 +63,24 @@ li a:hover:not(.active) {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+/* Tabellen (im Editbereich) */
+table {
+  margin-bottom: 20px;
+  padding: 20px;
+  border-collapse: collapse; /* kein Zwischenraum zwischen den Bordern */
+}
+
+th,td {
+  border: 1px solid;
+  padding: 10px;
+}
+
+/* diverse Hervorhebungen */
+.text-danger {
+  color: #dc3545;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration:none;
+}

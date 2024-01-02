@@ -3,7 +3,6 @@
 
 // Funktion um die Daten eines EscapeGames zum Download anzubieten
 function downloadJSON(game) {
-    //TODO: Prüfen ob game wirklich ein EscapeGame ist
     if (! game instanceof EscapeGame) {
         alert("Es wird kein EscapeGame gespeichert");
         return;
@@ -25,7 +24,7 @@ function downloadJSON(game) {
     a.download = 'escapegame.json';
 
     // Klicken Sie auf den Link, um das Herunterladen zu initiieren
-    // TODO: Alternativ Modal anzeigen und den Benutzer auf den Link klicken lassen mit
+    // NOTE: Alternativ Modal anzeigen und den Benutzer auf den Link klicken lassen mit
     //       dem Vorteil, dass man den Dateinamen auswählen/ändern kann
     a.click();
 

@@ -3,6 +3,7 @@
    Räume geben dann nur Folge-IDs zurück um den Raum zu wechseln
 */
 class EscapeGame {
+    editAllowed = true;
     startraumID = 0;
     raumliste = [new Raum()];
     aktuellerRaumID = 0;
@@ -33,6 +34,7 @@ class EscapeGame {
     testKeyOnLock(key) {
         console.log("GAME: Schlüssel auf Schloss prüfen:"+key);
         let folgeraumID = this.raumliste[this.aktuellerRaumID].testKeyOnLock(key);
+        console.log("GAME: erhaltene Folgeraumid - "+folgeraumID);
         if (folgeraumID>=0) {
             this.aktuellerRaumID = folgeraumID;
             return true; //Success melden

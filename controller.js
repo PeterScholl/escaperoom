@@ -1,16 +1,46 @@
 /* Die Klasse Controller bildt die Verbindung zwischen dem HTML-Dokument und
    der Programmierlogik
+   Ich führe den Controller als Singleton aus - zwei machen keinen Sinn
+    - nach der Webseite https://www.heise.de/blog/GoF-Entwurfsmuster-in-JavaScript-Teil-1-Singleton-3079815.html
 */
 
 
 
 class Controller {
     constructor(name) {
-        this.name = name;
-        this.game = new EscapeGame("Start",null);
-        this.game.setExample();
-
+        if (typeof Controller.instance === 'object') {
+            return Controller.instance;
+        } else {
+            //erster und einziger Aufruf der Initialisierung
+            let dest = getUrlParam("url");
+            console.log("JSON laden von " + dest);
+            if (dest) {
+                //TODO JSON von URL laden implementieren
+                fetch(dest, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(response => console.log(JSON.stringify(response)))
+            }
+            this.name = name;
+            let game = new EscapeGame("Start", null);
+            game.setExample();
+            this.newGame(game);
+            Controller.instance = this;
+        }
     }
+    //getInstanceMethode um den Controller zur erhalten
+    static getInstance() {
+        Controller.instance = new Controller("Controller - Instanz");
+        Controller.getInstance = function () {
+            return Controller.instance;
+        }
+        return Controller.instance;
+    }
+
     /* init initialisiert:
         * die Buttons der Menüleiste
         * den Listener für die Eingabe des Keys
@@ -32,23 +62,17 @@ class Controller {
             menuItems[i].addEventListener("click", (event) => self.reactMenuClick(event));
         }
 
-        // Listener für das Keyfeld
-        document.getElementById('keyfeld').addEventListener('keypress', function(event) {
-            // Überprüfe, ob die gedrückte Taste die Enter-Taste ist
-            if (event.key === 'Enter') {
-                 // Verhindert das Standardverhalten des Formulars (neu laden)
-                event.preventDefault();
-                self.keyauswerten(document.getElementById('keyfeld').value);
-            }
-        });
+        // Listener für das Keyfeld aktivieren (Reagiert auf Enter)
+        this.enableListenerKeyFeld(true);
+
 
         // Button des Modals bzw. click daneben
-        document.getElementById('infomodalbutton').addEventListener("click", function(event) {
-             self.showModal(false);
-        });
-        document.getElementById('overlay').addEventListener("click", function(event) {
+        document.getElementById('infomodalbutton').addEventListener("click", function (event) {
             self.showModal(false);
-       });
+        });
+        document.getElementById('overlay').addEventListener("click", function (event) {
+            self.showModal(false);
+        });
 
         this.drawRoom();
     }
@@ -75,6 +99,11 @@ class Controller {
                 console.log("menuitem Save: Datei wird gespeichert");
                 downloadJSON(self.game);
                 break;
+            case "menuitem_edit":
+                // Code für den Menüpunkt Save
+                console.log("menuitem Edit - toggle Editview");
+                self.toggleEditView();
+                break;
 
             default:
                 // Code für den Fall, dass keine der vorherigen Bedingungen zutrifft
@@ -85,24 +114,48 @@ class Controller {
     //Funktion die den aktuellen Raum auf der Webseite darstellt
     drawRoom() {
         // Name darstellen
-        document.getElementById('raumname').innerText=this.game.getAktuellerRaumName();
+        document.getElementById('raumname').innerText = this.game.getAktuellerRaumName();
         // Infotext bzw. Welcometext ausgeben
-        document.getElementById('infotext').innerHTML=this.game.getAktuellerRaumText();
+        document.getElementById('infotext').innerHTML = this.game.getAktuellerRaumText();
         //TODO bei Zielraum eingabefeld ausblenden / ansonsten Einblendung prüfen und wieder 
-        
+
+    }
+
+    //Die Editieransicht ein oder Ausschalten und initialisieren
+    toggleEditView() {
+        let self = this;
+        let mainArea = document.getElementById('mainArea');
+        let editArea = document.getElementById('editArea');
+        if (editArea.style.display === 'block') {
+            //EditArea ausblenden
+            mainArea.style.display = 'block';
+            editArea.style.display = 'none';
+            self.drawRoom();
+        } else {
+            //EditArea einblenden
+            mainArea.style.display = 'none';
+            editArea.style.display = 'block';
+            initEditArea();
+        }
+
     }
 
     //Neues Escape-Game starten
     newGame(game) {
-        this.game=game;
+        this.game = game;
         this.drawRoom();
         //ggf. Modal ausblenden
         this.showModal(false);
+        if (this.game.editAllowed) {
+            document.getElementById('menuitem_edit').style.display = 'block';
+        } else {
+            document.getElementById('menuitem_edit').style.display = 'none';
+        }
     }
 
     //Funktion die den eingegebenen Schlüssel auswertet
     keyauswerten(key) {
-        console.log("Schlüssel "+key+" wurde eingegeben!");
+        console.log("Schlüssel " + key + " wurde eingegeben!");
         // Testen ob es einen Infotext zu diesem Schlüssel gibt
         let text = this.game.testKeyOnInfotexte(key);
         if (text) {
@@ -114,7 +167,7 @@ class Controller {
         if (success) {
             this.drawRoom();
         } else {
-            if (! this.isModalShown()) {
+            if (!this.isModalShown()) {
                 //Nur anzeigen, wenn nicht evtl. schon ein anderer Infotext gezeigt wird
                 this.setModalText("Dieser Schlüssel ist ungültig");
                 this.showModal(true);
@@ -124,10 +177,13 @@ class Controller {
 
     //Funktion zum anzeigen und ausblenden des Infomodals
     showModal(show) {
+        let self = this;
         if (show) {//anzeigen
             document.getElementById('infomodal').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
-            document.getElementById('infomodalbutton').focus();
+            if (document.getElementById('infomodalbutton')) {
+                document.getElementById('infomodalbutton').focus();
+            }
         } else { //ausblenden
             document.getElementById('infomodal').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
@@ -140,7 +196,90 @@ class Controller {
         return document.getElementById('infomodal').style.display === 'block';
     }
     setModalText(text) {
-        document.getElementById('infomodaltext').innerHTML=text;
+        //Baut den Inhalt des Modals komplett neu auf mit dem übergebenen Text
+        //document.getElementById('infomodaltext').innerHTML = text;
+        let infomodaldiv = document.getElementById('infomodal');
+        infomodaldiv.innerHTML = ""; //leeren
+        //Basisabschnitt
+        let modal_p = document.createElement("p");
+        modal_p.id = "infomodaltext";
+        modal_p.innerHTML = text;
+        infomodaldiv.appendChild(modal_p);
+        // Button
+        let bestaetigeModalButton = document.createElement("button");
+        bestaetigeModalButton.innerHTML = "Bestätigen";
+        bestaetigeModalButton.id = "infomodalbutton";
+        bestaetigeModalButton.addEventListener("click", function (event) {
+            Controller.getInstance().showModal(false);
+        });
+
+        infomodaldiv.appendChild(bestaetigeModalButton);
+    }
+
+    //öffnet einen Editor mit einer Basisdatei
+    // gibt null oder neuen Inhalt zurück
+    showEditorInModal(sourceHTML, returnResultFunction) {
+        //Kleiner Test
+        if (typeof (returnResultFunction) === 'function') {
+            console.log("CONT: returnResultFunction ist funktion");
+        } else {
+            console.log("CONT: returnResultFunction ist KEINE funktion" + returnResultFunction);
+        }
+        let self = this;
+        //Baut den Inhalt des Modals komplett neu auf mit dem übergebenen Text
+        let infomodaldiv = document.getElementById('infomodal');
+        infomodaldiv.innerHTML = ""; //leeren
+        //Textarea für eingabe
+        let modal_ta = document.createElement("textarea");
+        modal_ta.id = "editor";
+
+        infomodaldiv.appendChild(modal_ta);
+        // Initialisiere den CKEditor
+        modal_ta.innerHTML = sourceHTML;
+        CKEDITOR.replace('editor');
+
+
+        // Speichern - Button
+        let saveEditorContentButton = document.createElement("button");
+        saveEditorContentButton.innerHTML = "Speichern";
+        saveEditorContentButton.id = "editorInModalSpeichernButton";
+        saveEditorContentButton.addEventListener("click", function (event) {
+            //Inhalt des Editors zurückgeben und Modal schliessen
+            const editor = CKEDITOR.instances.editor;
+            const htmlContent = editor.getData();
+            if (typeof (returnResultFunction) === 'function') {
+                console.log("ReturnResult-Funktion aufrufen");
+                console.log(htmlContent);
+                returnResultFunction(htmlContent);
+            }
+            self.showModal(false);
+        });
+
+        infomodaldiv.appendChild(saveEditorContentButton);
+        self.showModal(true);
+
+    }
+
+    setRaumWelcometext(raumId, text) {
+        console.log("CONT: setRaumWelcomeID " + raumId + " - " + text);
+        let self = this;
+        self.game.raumliste[raumId].welcometext = text;
+    }
+
+    enableListenerKeyFeld(bool) {
+        let self = this;
+        if (bool) { //aktivieren
+            document.getElementById('keyfeld').addEventListener('keypress', function (event) {
+                // Überprüfe, ob die gedrückte Taste die Enter-Taste ist
+                if (event.key === 'Enter') {
+                    // Verhindert das Standardverhalten des Formulars (neu laden)
+                    event.preventDefault();
+                    self.keyauswerten(document.getElementById('keyfeld').value);
+                }
+            });
+        } else { //deaktivieren
+            document.getElementById('keyfeld').removeEventListener('keypress');
+        }
     }
 }
 
