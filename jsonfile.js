@@ -3,7 +3,7 @@
 
 // Funktion um die Daten eines EscapeGames zum Download anzubieten
 function downloadJSON(game) {
-    if (! game instanceof EscapeGame) {
+    if (!game instanceof EscapeGame) {
         alert("Es wird kein EscapeGame gespeichert");
         return;
     } else {
@@ -62,7 +62,7 @@ function openJSON(controller) {
                     let jsonObj = JSON.parse(jsonText);
 
                     let newEscapeGame = parseJSONObjToEscapeGame(jsonObj);
-                     
+
                     //console.log(jsonObj);
                     //console.log(newEscapeGame);
 
@@ -80,7 +80,8 @@ function openJSON(controller) {
 
                     // Fehlerhaftes Ergebnis (null) an eine Callback-Funktion zurückgeben
                     // ergebnisCallback(null);
-                }            };
+                }
+            };
 
             // Die Datei als Text lesen
             reader.readAsText(datei);
@@ -103,9 +104,9 @@ function parseJSONObjToEscapeGame(jsonObj) {
     // 2. Raumliste aufbauen
     let newRaumliste = [];
     if (Array.isArray(jsonObj.raumliste)) {
-        newRaumliste=jsonObj.raumliste.map(parseJSONObjToRaum);
+        newRaumliste = jsonObj.raumliste.map(parseJSONObjToRaum);
     }
-    newEscapeGame.raumliste=newRaumliste;
+    newEscapeGame.raumliste = newRaumliste;
     if (Number.isInteger(jsonObj.startraumID)) {
         newEscapeGame.startraumID = jsonObj.startraumID;
         newEscapeGame.aktuellerRaumID = jsonObj.startraumID;
@@ -125,7 +126,7 @@ function parseJSONObjToRaum(jsonObjRaum) {
     if (jsonObjRaum.welcometext) {
         welcometext = jsonObjRaum.welcometext;
     }
-    let newRaum = new Raum(raumname,welcometext);
+    let newRaum = new Raum(raumname, welcometext);
     if (typeof jsonObjRaum.istZiel == "boolean") {
         newRaum.istZiel = jsonObjRaum.istZiel;
     }
@@ -133,10 +134,11 @@ function parseJSONObjToRaum(jsonObjRaum) {
     // Clonen ist überflüssig, da das JSON-Obj später nicht mehr 
     // gebraucht wird (hoffentlich)
     if (jsonObjRaum.folgeraeume.constructor == Object) {
-        newRaum.folgeraeume=jsonObjRaum.folgeraeume;
+        newRaum.folgeraeume = jsonObjRaum.folgeraeume;
     }
     if (jsonObjRaum.infotexte.constructor === Object) {
-        newRaum.infotexte=jsonObjRaum.infotexte;
+        newRaum.infotexte = jsonObjRaum.infotexte;
     }
     return newRaum;
 }
+

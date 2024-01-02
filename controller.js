@@ -12,19 +12,6 @@ class Controller {
             return Controller.instance;
         } else {
             //erster und einziger Aufruf der Initialisierung
-            let dest = getUrlParam("url");
-            console.log("JSON laden von " + dest);
-            if (dest) {
-                //TODO JSON von URL laden implementieren
-                fetch(dest, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                    },
-                })
-                    .then(response => response.json())
-                    .then(response => console.log(JSON.stringify(response)))
-            }
             this.name = name;
             let game = new EscapeGame("Start", null);
             game.setExample();
@@ -42,6 +29,7 @@ class Controller {
     }
 
     /* init initialisiert:
+        * Versucht ein JSON zu laden
         * die Buttons der Menüleiste
         * den Listener für die Eingabe des Keys
         * den Button des Modals (ausblenden/bestaetigen)
@@ -51,6 +39,34 @@ class Controller {
     init() {
         let self = this;
         console.log("Das Dokument wurde geladen. init() wird aufgerufen.");
+
+        //Wurde ein Dokument per get-Parameter übergeben?
+        let dest = getUrlParam("url");
+        console.log("JSON laden von " + dest);
+        if (dest) {
+            fetch(dest, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Netzwerkantwort war nicht OK');
+                    }
+                    return response.json();
+                }).then(response => parseJSONObjToEscapeGame(response))
+                .then(response => Controller.getInstance().newGame(response))
+                .catch(error => {
+                    // Hier wird der Fehler behandelt
+                    console.log('Fehler bei der Fetch-Anfrage:'+ error);
+                    // Füge hier weitere Fehlerbehandlung hinzu, falls erforderlich
+                    Controller.getInstance().setModalText("JSON-URL konnte nicht als Game interpretiert werden: "+error);
+                    Controller.getInstance().showModal(true);
+                });
+
+        }
+
 
         // Schleife durch alle Elemente mit der Klasse "menuitem"
         var menuItems = document.querySelectorAll('[id^="menuitem"]');

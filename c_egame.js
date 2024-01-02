@@ -17,11 +17,12 @@ class EscapeGame {
 
     //ERstellt ein Beispielescapegame
     setExample() {
-        let r1 = new Raum("Startraum Beispielgame","Du bist in einem dunklen Startraum, der Schalter für das Licht ist binär. Was steht darauf?");
-        let r2 = new Raum("Zielraum - Beispielgame","Du bist am Ziel und hast die Erleuchtung gefunden");
+        let r1 = new Raum("Startraum Beispielgame","Du bist in einem dunklen Startraum, der Schalter für das Licht ist binär.<br>"
+        +"Worauf solltest du den Schalter stellen?");
+        let r2 = new Raum("Zielraum - Beispielgame","Du bist am Ziel und hast die Erleuchtung gefunden :-)");
         this.raumliste=[r1,r2];
         r1.folgeraeume = {"eins":1, "1":1};
-        r2.folgeraeume = {};
+        r2.folgeraeume = {"back":0};
         r2.istZiel = true;
         r1.infotexte = {"0":"so geht es aus"};
         this.startraumID = 0;
@@ -59,12 +60,12 @@ class EscapeGame {
     //Aktuellen Raumnamen ausgeben
     getAktuellerRaumName() {
         let aktuellerRaum = this.raumliste[this.aktuellerRaumID];
-        return aktuellerRaum.name;
+        return typeof(aktuellerRaum) !== 'undefined' ? aktuellerRaum.name : "None";
     }
 
     // Text zum aktuellen Raum ausgeben
     getAktuellerRaumText() {
         let aktuellerRaum = this.raumliste[this.aktuellerRaumID];
-        return aktuellerRaum.welcometext;
+        return typeof(aktuellerRaum) !== 'undefined' ? aktuellerRaum.welcometext : "None";
     }
 }
