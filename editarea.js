@@ -3,7 +3,7 @@ function initEditArea() {
     // Löschen aller Child-Elemente
     editArea.innerHTML = "";
     // Horzizontal Row zur Abgrenzung erzeugen
-    editArea.appendChild(document.createElement("hr"));
+    // editArea.appendChild(document.createElement("hr"));
 
     //Raumauswahl erzeugen
     let selectElement = selectElementRaumauswahl();

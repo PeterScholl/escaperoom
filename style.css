@@ -63,3 +63,15 @@ li a:hover:not(.active) {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+/* TODO Tabellen im Editbereich */
+table {
+  margin-top: 20px;
+  padding: 20px;
+  border-collapse: collapse; /* kein Zwischenraum zwischen den Bordern */
+}
+
+th,td {
+  border: 1px solid;
+  padding: 10px;
+}

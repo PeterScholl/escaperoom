@@ -59,7 +59,7 @@ class Raum {
         }
         let folgeraumID = this.folgeraeume[hkey];
         console.log("FolgeraumID: "+folgeraumID+" ist Integer "+Number.isInteger(folgeraumID));
-        if (Number.isInteger(folgeraumID) && folgeraumID>0) {
+        if (Number.isInteger(folgeraumID) && folgeraumID>=0) {
             return folgeraumID;
         }
         // sonst -1
