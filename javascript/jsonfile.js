@@ -111,6 +111,10 @@ function parseJSONObjToEscapeGame(jsonObj) {
         newEscapeGame.startraumID = jsonObj.startraumID;
         newEscapeGame.aktuellerRaumID = jsonObj.startraumID;
     }
+    // 3. Grunddaten übernehmen 
+    // TODO: sind das alle?
+    newEscapeGame.editAllowed = jsonObj.editAllowed;
+
     return newEscapeGame;
 }
 

@@ -166,7 +166,10 @@ class Controller {
             document.getElementById('menuitem_edit').style.display = 'block';
         } else {
             document.getElementById('menuitem_edit').style.display = 'none';
-        }
+            //MainArea anzeigen und EditArea ausblenden
+            document.getElementById('mainArea').style.display = 'block';
+            document.getElementById('editArea').style.display = 'none';
+        }        
     }
 
     //Funktion die den eingegebenen Schlüssel auswertet
@@ -181,6 +184,7 @@ class Controller {
         // Testen ob es einen Folgeraum zu diesem Schlüssel gibt
         let success = this.game.testKeyOnLock(key);
         if (success) {
+            this.showLittleInfoModal("Der Schlüssel passt!");
             this.drawRoom();
         } else {
             if (!this.isModalShown()) {
@@ -296,6 +300,28 @@ class Controller {
         } else { //deaktivieren
             document.getElementById('keyfeld').removeEventListener('keypress');
         }
+    }
+
+    showLittleInfoModal(info) {
+        const infoContainer = document.getElementById('littleInfoContainer');
+
+        // Erzeuge ein neues Infomodal
+        const infoModal = document.createElement('div');
+        infoModal.className = 'littleInfo-modal';
+        infoModal.textContent = info;
+
+        // Füge das Infomodal zum Container hinzu
+        infoContainer.insertBefore(infoModal, infoContainer.firstChild);
+
+        // Zeige das Infomodal
+        infoModal.style.display = 'block';
+
+        // Setze einen Timeout, um das Infomodal nach 3 Sekunden zu entfernen
+        setTimeout(() => {
+            infoModal.style.display = 'none';
+            // Entferne das Infomodal aus dem DOM, um Platz für neue Infos zu machen
+            infoContainer.removeChild(infoModal);
+        }, 3000);
     }
 }
 

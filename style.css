@@ -64,6 +64,25 @@ li a:hover:not(.active) {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+/* Einstellungen für das little Info Modal - grün und rechts oben */
+.littleInfo-container {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  width: 200px; /* Breite des Containers */
+  z-index: 1000; /* Z-Index sicherstellt, dass es über anderen Elementen liegt */
+}
+
+.littleInfo-modal {
+  display: none;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 /* Tabellen (im Editbereich) */
 table {
   margin-bottom: 20px;

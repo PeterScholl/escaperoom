@@ -2,8 +2,8 @@ function initEditArea() {
     let editArea = document.getElementById('editArea');
     // Löschen aller Child-Elemente
     editArea.innerHTML = "";
-    // Horzizontal Row zur Abgrenzung erzeugen
-    // editArea.appendChild(document.createElement("hr"));
+
+    //Grundlagen des Game-Objekts
 
     //Raumauswahl erzeugen
     let p = document.createElement("p");
@@ -15,13 +15,44 @@ function initEditArea() {
     p.appendChild(selectElement);
     editArea.appendChild(p);
 
+    let neuerRaumButton = document.createElement("button");
+    neuerRaumButton.innerHTML = "Neuen Raum anlegen";
+    neuerRaumButton.style.marginLeft="5px";
+    neuerRaumButton.onclick = function () {
+        // Hier die Aktion für neuen Raum anlegen
+        console.log("neuer Raum wird angelegt");
+        Controller.getInstance().game.raumliste.push(new Raum("Neuer Raum","Willkommen im neuen Raum"));
+        updateRaumAuswahl();
+    };
+    p.appendChild(neuerRaumButton);
+
+    // TODO: Testen - Möglichkeit ohne Edit-anzeige zu speichern bzw. Speicheroptionen einzustellen
+    let speichernOhneEditButton = document.createElement("button");
+    speichernOhneEditButton.innerHTML = "Speichern ohne Edit";
+    speichernOhneEditButton.style.marginLeft="5px";
+    speichernOhneEditButton.onclick = function () {
+        // Hier die Aktion für neuen Raum anlegen
+        console.log("Raum wird gespeichernt");
+        Controller.getInstance().game.editAllowed = false;
+        downloadJSON(Controller.getInstance().game);
+        Controller.getInstance().game.editAllowed = true;
+    };
+    p.appendChild(speichernOhneEditButton);
+
+    
+    //Bereich für das Editieren des ausgewählten Raums
+
+    let div_editRaum = document.createElement("div");
+    div_editRaum.id = "raumbearbeitung";
+    editArea.appendChild(div_editRaum);
+
     //Tabelle mit Raumname und Welcometext erstellen
     p = document.createElement("p");
     p.innerHTML = "Basisdaten des Raums:<br>";
     let raumBasics = createTable(["Bezeichner", "Inhalt", "Aktionen"]);
     raumBasics.id = "table_raumBasics";
     p.appendChild(raumBasics);
-    editArea.appendChild(p);
+    div_editRaum.appendChild(p);
 
     //Rudimentäre Tabelle in der die Verweise auf die Folgeräume eingestellt und 
     //hinzugefügt werden können
@@ -30,7 +61,7 @@ function initEditArea() {
     let tbl_folgeraeume = createTable(["key", "Folgeraum"]);
     tbl_folgeraeume.id = "table_folgeraeume";
     p.appendChild(tbl_folgeraeume);
-    editArea.appendChild(p);
+    div_editRaum.appendChild(p);
 
     //Rudimentäre Tabelle mit den Infotexten 
     p = document.createElement("p");
@@ -38,7 +69,7 @@ function initEditArea() {
     let tbl_infotexte = createTable(["key", "Infotext", "Aktionen"]);
     tbl_infotexte.id = "table_infotexte";
     p.appendChild(tbl_infotexte);
-    editArea.appendChild(p);
+    div_editRaum.appendChild(p);
 
 
     // Inhalte eintragen
