@@ -12,9 +12,11 @@ Ich habe die Räume in einer Liste gespeichert und der Folgeraum nach einem erfo
 
 # Was noch zu tun ist/wäre bzw. Ideen
 kleine Liste für Ideen und Aufgaben
-* JSON-Files von URL lesen
+* JSON-Files von URL lesen (erledigt)
 * schönen Beispielraum erstellen
 * evtl. Schlösser oder Locks einbauen
 * liste von offenen Räumen, die man per Click betreten kann?!
 * Eine Erfolgsinformation bei einem richtigen Schlüssel ausgeben (automatisch schliessen?)
 * Kleine Infomodals am oberen Rand (erfolgreiche Namensänderung ...)
+* Startraum zurücksetzen bzw. festlegen fehlt noch...
+* JEST für VSCode einrichten
