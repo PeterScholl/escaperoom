@@ -3,7 +3,7 @@ class Raum {
     welcometext = "Dies ist ein Standardraum";
     name = "Standardraum";
     //Dictionary Infotexte
-    folgeraeume = { "0": this, "start": this };
+    folgeraeume = { "start": 0 };
     // Infotexte
     infotexte = { "help": "Gib einen Schlüssel ein um ihn auszuprobieren!" };
     istZiel = false;

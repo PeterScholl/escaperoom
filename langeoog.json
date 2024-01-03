@@ -1,0 +1,40 @@
+{
+  "editAllowed": true,
+  "startraumID": 0,
+  "raumliste": [
+    {
+      "keysHashed": false,
+      "welcometext": "<h2><strong>Ankunft am Hafen</strong></h2>\n\n<p>Jonas hat eine liebe Tante, die mit ihm Mathematik &uuml;bt. Sie hat f&uuml;r ihn auf Langeoog eine mathematische Schnitzeljagd erstellt. Jonas ist am Hafen und findet einen Zettel mit einer ersten Aufgabe:</p>\n\n<blockquote>\n<p>Lieber Jonas - erst mal etwas einfaches zum warm werden. Gib die L&ouml;sung hier unten ein und du erf&auml;hrst wie du mich finden kannst. Wenn du mal nicht weiter weist gib <cite>&quot;hilfe&quot;</cite> ein.<br />\n12 &middot; 37</p>\n</blockquote>\n\n<p>&nbsp;Hilf Jonas, seine Tante zu finden - viel Spa&szlig; dabei</p>\n",
+      "name": "Escape - Flucht in die Mathematik",
+      "folgeraeume": {
+        "444": 1
+      },
+      "infotexte": {
+        "hilfe": "<p>Vielleicht rechnest du erst mal 10&middot;37 und dann 2&middot;37</p>\n"
+      },
+      "istZiel": false
+    },
+    {
+      "keysHashed": false,
+      "welcometext": "<p>Du kommst auf dem Sandornhof an und gehst um den Hof. Dort werden einige Pferde gehalten. Auf dem Hof findest du aufgemalt ein komisches Muster:</p>\n\n<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\n\t<tbody>\n\t\t<tr>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t</tr>\n\t</tbody>\n</table>\n\n<p>Etwas versteckt siehst du unter einem Stein einen kleinen Zettel liegen:</p>\n\n<blockquote>\n<p>Du siehst hier vier Figuren aus roten Feldern. Wenn du mich finden willst musst du folgende Frage beantworten: Wie viele Felder h&auml;tte die 11. Figur?</p>\n</blockquote>\n",
+      "name": "vom Hafen zum Sanddornhof",
+      "folgeraeume": {
+        "back": 0
+      },
+      "infotexte": {
+        "hilfe": "<p>&Uuml;berlege dir die Kantenl&auml;ngen der Muster.</p>\n\n<p>Die 3te Figur hat Kantenl&auml;ngen 3 und 4.<br />\nDie 4te Figur hat Kantenl&auml;ngen 4 und 5</p>\n"
+      },
+      "istZiel": true
+    },
+    {
+      "keysHashed": false,
+      "welcometext": "Willkommen im neuen Raum",
+      "name": "Neuer Raum",
+      "folgeraeume": {},
+      "infotexte": {},
+      "istZiel": false
+    }
+  ],
+  "aktuellerRaumID": 0,
+  "name": "Beispiel-Escape-Game"
+}
