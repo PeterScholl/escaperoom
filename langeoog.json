@@ -19,6 +19,7 @@
       "welcometext": "<p>Du kommst auf dem Sandornhof an und gehst um den Hof. Dort werden einige Pferde gehalten. Auf dem Hof findest du aufgemalt ein komisches Muster:</p>\n\n<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\n\t<tbody>\n\t\t<tr>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td>&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t\t<td style=\"background-color:#aa0000\">&nbsp;</td>\n\t\t</tr>\n\t</tbody>\n</table>\n\n<p>Etwas versteckt siehst du unter einem Stein einen kleinen Zettel liegen:</p>\n\n<blockquote>\n<p>Du siehst hier vier Figuren aus roten Feldern. Wenn du mich finden willst musst du folgende Frage beantworten: Wie viele Felder h&auml;tte die 11. Figur?</p>\n</blockquote>\n",
       "name": "vom Hafen zum Sanddornhof",
       "folgeraeume": {
+        "132": 2,
         "back": 0
       },
       "infotexte": {
@@ -28,13 +29,17 @@
     },
     {
       "keysHashed": false,
-      "welcometext": "Willkommen im neuen Raum",
-      "name": "Neuer Raum",
-      "folgeraeume": {},
-      "infotexte": {},
+      "welcometext": "<p>Du f&auml;hrst mit der Bahn vom Hafen zum Bahnhof der Insel.</p>\n",
+      "name": "mit der Inselbahn zum Bahnhof",
+      "folgeraeume": {
+        "start": 0
+      },
+      "infotexte": {
+        "hilfe": "Infotext zu hilfe"
+      },
       "istZiel": false
     }
   ],
-  "aktuellerRaumID": 0,
-  "name": "Beispiel-Escape-Game"
+  "aktuellerRaumID": 1,
+  "name": "Langeoog - Escapegame"
 }
