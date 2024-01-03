@@ -85,14 +85,14 @@ class Raum {
 
     //Setzt einen Infotext für einen gegebenen Key
     setInfotext(key, infotext) {
-        if (typeof(infotext)==='string') {
+        if (typeof (infotext) === 'string') {
             let hkey = key;
             if (this.keysHashed) {
                 hkey = hashStringSync(key);
             }
             this.infotexte[hkey] = infotext;
         } else {
-            console.log("RAUM: setInfoText war kein String - "+infotext+" sondern: "+typeof(infotext));
+            console.log("RAUM: setInfoText war kein String - " + infotext + " sondern: " + typeof (infotext));
         }
     }
 
@@ -108,5 +108,51 @@ class Raum {
     set welcometext(text) {
         console.log("RAUM: " + this.name + " in set welcometext:" + text);
         this.welcometext = text;
+    }
+}
+
+class LockedRaum extends Raum {
+    #lockedBy = new Set(); // locks which keep the room closed
+    #isOpen = false;
+    #offersLocks = new Set(); //the locks you can open in this room
+
+    constructor(name, welcometext) {
+        super(name, welcometext);
+    }
+
+    removeLock(lock) {
+        if (lock in this.#lockedBy) {
+            this.#lockedBy.delete(lock);
+        }
+    }
+
+    set lockedBy(newLock) {
+        if (newLock instanceof Lock) {
+            this.#lockedBy.add(newLock);
+        }
+    }
+
+    set lockOffered(lock) {
+        if (lock instanceof Lock) {
+            this.#offersLocks.add(lock);
+        }
+    }
+
+    get isOpen() {
+        if (this.isOpen) {
+            return true;
+        } else {
+            this.isOpen = true;
+            this.lockedBy.forEach(function (value) {
+                this.isOpen &= value.isOpen;
+            })
+        }
+        return this.#isOpen;
+    }
+
+    set isOpen(x) {
+        if (typeof(x) === 'boolean') {
+            this.#isOpen=x;
+        }
     }
 }

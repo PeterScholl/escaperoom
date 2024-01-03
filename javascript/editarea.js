@@ -39,7 +39,7 @@ function initEditArea() {
     };
     p.appendChild(speichernOhneEditButton);
 
-    
+
     //Bereich für das Editieren des ausgewählten Raums
 
     let div_editRaum = document.createElement("div");
@@ -339,6 +339,7 @@ function deleteInfotextKey(key) {
 
 //Aktualisiert die Raumauswahl z.B. nach einer erfolgten Namensänderung
 function updateRaumAuswahl() {
+    //TODO evtl. alle Raumauswahlen (auch bei Folgeräumen) aktualisieren
     //Alten Selector holen - zum Ersetzen und Wert übernehmen
     let alterSelector = document.getElementById('editAreaSelectRoom');
 
