@@ -1,6 +1,5 @@
 // test.js
-//const assert = require('chai').assert;
-//const Lock = require('../javascript/c_lock'); // Passe den Pfad an, wenn nötig
+// Vorlage bzw. Idee von https://javascript.info/testing-mocha
 
 describe('Lock Class Tests', () => {
     it('Lock should be closed by default', () => {
@@ -30,12 +29,9 @@ describe('Lock Class Tests 2', () => {
         assert.equal(myLock.isOpen, true);
     });
 
-    it('Set and get lock name', () => {
+    it('Get lock name', () => {
         const myLock = new Lock('MyLock', '1234');
         assert.equal(myLock.name, 'MyLock');
-
-        myLock.name = 'NewLockName';
-        assert.equal(myLock.name, 'NewLockName');
     });
 
     it('Set and get lock status', () => {

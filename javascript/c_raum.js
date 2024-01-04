@@ -120,8 +120,20 @@ class LockedRaum extends Raum {
         super(name, welcometext);
     }
 
+    static createFromRaum(r) {
+        if (r instanceof Raum) {
+            let lr = new LockedRaum(r.name, r.welcometext);
+            lr.keysHashed = r.keysHashed;
+            lr.folgeraeume = r.folgeraeume;
+            lr.infotexte = r.infotexte;
+            lr.istZiel = r.istZiel;
+            return lr;
+        }
+        return new LockedRaum("Neu","Dies ist ein neuer Raum");
+    }
+
     removeLock(lock) {
-        if (lock in this.#lockedBy) {
+        if (this.#lockedBy.has(lock)) {
             this.#lockedBy.delete(lock);
         }
     }
@@ -154,5 +166,9 @@ class LockedRaum extends Raum {
         if (typeof(x) === 'boolean') {
             this.#isOpen=x;
         }
+    }
+
+    get lockedBy() {
+        return this.#lockedBy;
     }
 }
