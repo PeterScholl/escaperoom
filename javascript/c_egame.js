@@ -68,4 +68,22 @@ class EscapeGame {
         let aktuellerRaum = this.raumliste[this.aktuellerRaumID];
         return typeof(aktuellerRaum) !== 'undefined' ? aktuellerRaum.welcometext : "None";
     }
+
+    /**
+     * doOpenRoomsExist prüft ob das Game offene Räume von Typ lockedRaeume enthält
+     * @returns true wenn es offene Räume gibt
+     */
+    doOpenRoomsExist() {
+        return this.openRooms().length > 0;
+    }
+
+    /**
+     * openRooms liefert 
+     * @returns ein Array der offenen Räume
+     */
+    openRooms() {
+        lockedRooms = this.raumliste.filter((x) => (x instanceof LockedRaum));
+        openRooms = lockedRooms.filter((x) => {x.isOpen();});
+        return this.openRooms;
+    }
 }

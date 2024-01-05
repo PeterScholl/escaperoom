@@ -29,17 +29,32 @@
     },
     {
       "keysHashed": false,
-      "welcometext": "<p>Du f&auml;hrst mit der Bahn vom Hafen zum Bahnhof der Insel.</p>\n",
+      "welcometext": "<p>Vor dem Bahnhof findest du wieder eine Figur - ein Rechteck mit den Kantenl&auml;ngen 2m und 3m. Den dir schon bekannten Zettel findest du nach einem kurzen Umsehen sehr schnell:</p>\n\n<blockquote>\n<p>In Langeoog fallen auf der Fl&auml;che die du vor dir siehst knapp 6000l Regen innerhalb eines Jahres. Wie viele Liter fallen dann auf einen Quadratmeter?</p>\n</blockquote>\n\n<p>Wenn du hilfe brauchst gib ein, wie viele Liter in einem Monat auf die Fl&auml;che fallen...&nbsp;</p>\n",
       "name": "mit der Inselbahn zum Bahnhof",
+      "folgeraeume": {
+        "start": 0,
+        "1000l": 3
+      },
+      "infotexte": {
+        "500": "<p>Wie w&auml;re es mit einer Einheit? :-)</p>\n",
+        "hilfe": "<p>Eine Hilfe zu Quadratmetern erh&auml;ltst du, wenn du die monatliche Regenm&auml;nge mit einem unmittelbar angeh&auml;ngten Einheitenzeichen (kleines l f&uuml;r Liter) eingibst...</p>\n\n<p>Stelle dir das Rechteck aus den Quadratmetern vor.</p>\n",
+        "500l": "<p>Ich hoffe du hast nicht versucht die Einheit mit einem Leerzeichen einzug<img alt=\"Ein Quadratmeter\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/M%C3%A8tre_carr%C3%A9.png/330px-M%C3%A8tre_carr%C3%A9.png\" style=\"float:right; height:188px; width:200px\" />eben ...</p>\n\n<p>Du solltest vielleicht zun&auml;chst mal den Fl&auml;cheninhalt der Fl&auml;che berechnen. Aus wie vielen Quadratmetern besteht die Fl&auml;che.</p>\n\n<p>Was ist ein Quadratmeter?! Ein Quadratmeter ist eine Fl&auml;cheneinheit, sie besteht aus der Fl&auml;che die von einem Quadrat mit der Kantenl&auml;nge 1m &middot; 1m &uuml;berdeckt wird.</p>\n"
+      },
+      "istZiel": false
+    },
+    {
+      "keysHashed": false,
+      "welcometext": "Willkommen im neuen Raum",
+      "name": "vom Inselbahnhof zum Aussichtsturm auf der alten Müllhalde",
       "folgeraeume": {
         "start": 0
       },
       "infotexte": {
-        "hilfe": "Infotext zu hilfe"
+        "help": "Gib einen Schlüssel ein um ihn auszuprobieren!"
       },
       "istZiel": false
     }
   ],
-  "aktuellerRaumID": 1,
+  "aktuellerRaumID": 0,
   "name": "Langeoog - Escapegame"
 }
