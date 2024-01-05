@@ -59,9 +59,9 @@ class Controller {
                 .then(response => Controller.getInstance().newGame(response))
                 .catch(error => {
                     // Hier wird der Fehler behandelt
-                    console.log('Fehler bei der Fetch-Anfrage:'+ error);
+                    console.log('Fehler bei der Fetch-Anfrage:' + error);
                     // Füge hier weitere Fehlerbehandlung hinzu, falls erforderlich
-                    Controller.getInstance().setModalText("JSON-URL konnte nicht als Game interpretiert werden: "+error);
+                    Controller.getInstance().setModalText("JSON-URL konnte nicht als Game interpretiert werden: " + error);
                     Controller.getInstance().showModal(true);
                 });
 
@@ -162,14 +162,19 @@ class Controller {
         this.drawRoom();
         //ggf. Modal ausblenden
         this.showModal(false);
-        if (this.game.editAllowed) {
-            document.getElementById('menuitem_edit').style.display = 'block';
-        } else {
-            document.getElementById('menuitem_edit').style.display = 'none';
-            //MainArea anzeigen und EditArea ausblenden
-            document.getElementById('mainArea').style.display = 'block';
-            document.getElementById('editArea').style.display = 'none';
-        }        
+        if (this.game.options["showMenu"]) {
+            if (this.game.options["editAllowed"]) {
+                document.getElementById('menuitem_edit').style.display = 'block';
+            } else {
+                document.getElementById('menuitem_edit').style.display = 'none';
+                //MainArea anzeigen und EditArea ausblenden
+                document.getElementById('mainArea').style.display = 'block';
+                document.getElementById('editArea').style.display = 'none';
+            }
+        } else { //Menuitems bis auf About ausblenden
+            //TODO - Menuitems ausblenden
+            //document.querySelectorAll('[id^="menuitem"]'); - läuft durch alle Items (siehe init() - Methode)
+        }
     }
 
     //Funktion die den eingegebenen Schlüssel auswertet

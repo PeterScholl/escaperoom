@@ -33,9 +33,11 @@ function initEditArea() {
     speichernOhneEditButton.onclick = function () {
         // Hier die Aktion für neuen Raum anlegen
         console.log("Raum wird gespeichernt");
-        Controller.getInstance().game.editAllowed = false;
+        let game = Controller.getInstance().game;
+        let oldoptions = JSON.parse(JSON.stringify(game.options));
+        game.options["editAllowed"] = false;
         downloadJSON(Controller.getInstance().game);
-        Controller.getInstance().game.editAllowed = true;
+        game.options["editAllowed"] = oldoptions["editAllowed"];
     };
     p.appendChild(speichernOhneEditButton);
 

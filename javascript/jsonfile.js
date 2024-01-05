@@ -113,8 +113,9 @@ function parseJSONObjToEscapeGame(jsonObj) {
     }
     // 3. Grunddaten übernehmen 
     // TODO: sind das alle?
-    newEscapeGame.editAllowed = jsonObj.editAllowed;
-
+    if (jsonObj.options) {
+        newEscapeGame.options = jsonObj.options;
+    }
     return newEscapeGame;
 }
 

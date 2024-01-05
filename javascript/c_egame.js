@@ -3,7 +3,7 @@
    Räume geben dann nur Folge-IDs zurück um den Raum zu wechseln
 */
 class EscapeGame {
-    editAllowed = true;
+    options = {"editAllowed":true, "showMenu":true}; //Optionen des Games
     startraumID = 0;
     raumliste = [new Raum()];
     aktuellerRaumID = 0;
